@@ -1,15 +1,22 @@
 'use client'
 
 import { ButtonHTMLAttributes, forwardRef } from 'react'
-import { motion } from 'framer-motion'
+import { motion, HTMLMotionProps } from 'framer-motion'
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+// Separate the motion-specific props from standard button props
+type MotionButtonProps = HTMLMotionProps<'button'>
+
+// Define our custom button props without conflicting event handlers
+interface CustomButtonProps {
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost'
   size?: 'sm' | 'md' | 'lg'
   isLoading?: boolean
   asChild?: boolean
   children: React.ReactNode
 }
+
+// Combine motion props with our custom props, excluding conflicting event handlers
+type ButtonProps = Omit<MotionButtonProps, keyof CustomButtonProps> & CustomButtonProps
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ 
@@ -19,7 +26,15 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     children, 
     className = '', 
     disabled,
-    ...props 
+    // Extract motion-specific props
+    whileHover,
+    whileTap,
+    animate,
+    initial,
+    exit,
+    transition,
+    // Extract any other props that might conflict
+    ...restProps 
   }, ref) => {
     
     const baseClasses = 'inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed'
@@ -44,9 +59,15 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         className={classes}
         disabled={disabled || isLoading}
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
-        {...props}
+        // Use motion-specific props with proper defaults
+        whileHover={whileHover || { scale: 1.02 }}
+        whileTap={whileTap || { scale: 0.98 }}
+        animate={animate}
+        initial={initial}
+        exit={exit}
+        transition={transition}
+        // Spread remaining props that are compatible with motion.button
+        {...restProps}
       >
         {isLoading && (
           <svg 
