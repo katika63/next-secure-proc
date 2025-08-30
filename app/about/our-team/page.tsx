@@ -112,7 +112,7 @@ export default function OurTeamPage() {
               Leadership <span className="gradient-text">Team</span>
             </h2>
             <p className="text-lg text-gray-300 max-w-3xl mx-auto">
-              Our experienced leadership team guides BTM Security's mission to provide 
+              Our experienced leadership team guides BTM Security&apos;s mission to provide 
               world-class cybersecurity solutions.
             </p>
           </div>
@@ -225,7 +225,7 @@ export default function OurTeamPage() {
             </h2>
             
             <p className="text-lg text-gray-300 mb-8">
-              We're always looking for talented cybersecurity professionals who share our passion 
+              We&apos;re always looking for talented cybersecurity professionals who share our passion 
               for protecting organizations from cyber threats.
             </p>
             

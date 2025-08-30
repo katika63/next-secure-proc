@@ -130,7 +130,7 @@ export default function TestimonialPage() {
 
                 {/* Quote */}
                 <blockquote className="text-gray-300 text-lg leading-relaxed mb-6 italic">
-                  "{testimonial.quote}"
+                  &quot;{testimonial.quote}&quot;
                 </blockquote>
 
                 {/* Author Info */}

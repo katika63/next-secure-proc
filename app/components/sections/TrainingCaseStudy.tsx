@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 export default function TrainingCaseStudy() {
     return (
       <section className="py-16 px-6">
@@ -9,9 +11,13 @@ export default function TrainingCaseStudy() {
                 <h3 className="text-2xl font-bold text-gray-200">University Security Training</h3>
               </div>
               <h4 className="text-xl font-bold mb-4 text-blue-400">Higher Education Case Study</h4>
-              <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
-                   alt="University security training"
-                   className="rounded-lg mb-4" />
+              <Image 
+                src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
+                alt="University security training"
+                width={600}
+                height={300}
+                className="rounded-lg mb-4" 
+              />
               <p className="text-gray-300 mb-6">
                 For a major university facing increasing phishing attacks, BTMSecurity implemented:
               </p>

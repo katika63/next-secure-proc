@@ -24,7 +24,7 @@ export default function CommunityImpact() {
         </div>
       </div>
       <p className="text-gray-300 max-w-3xl mx-auto mb-8">
-        We're committed to making cybersecurity education accessible through free resources, open-source tools, and community initiatives.
+        We&apos;re committed to making cybersecurity education accessible through free resources, open-source tools, and community initiatives.
       </p>
       <Link href="/contact" className="inline-block border border-blue-500 text-blue-400 hover:bg-blue-900 hover:bg-opacity-30 px-6 py-3 rounded-lg font-medium transition duration-300">
         Get Involved

@@ -494,12 +494,12 @@ export default function CareersPage() {
             viewport={{ once: true }}
           >
             <h2 className="text-3xl font-bold mb-4">
-              Don't See the Right Position?
+              Don&apos;t See the Right Position?
             </h2>
             
             <p className="text-lg text-gray-300 mb-8">
-              We're always looking for talented cybersecurity professionals. 
-              Send us your resume and let us know how you'd like to contribute to our mission.
+              We&apos;re always looking for talented cybersecurity professionals. 
+              Send us your resume and let us know how you&apos;d like to contribute to our mission.
             </p>
             
             <div className="flex gap-4 justify-center flex-wrap">

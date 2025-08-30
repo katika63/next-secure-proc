@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Head from 'next/head'
+import Image from 'next/image'
 
 export default function UKLegalAidCyberAttack() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -95,7 +96,7 @@ export default function UKLegalAidCyberAttack() {
   return (
     <>
       <Head>
-        <title>UK's Legal Aid Cyber Attack: Everything We Know | BTMSecurity</title>
+        <title>UK&apos;s Legal Aid Cyber Attack: Everything We Know | BTMSecurity</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
@@ -113,7 +114,7 @@ export default function UKLegalAidCyberAttack() {
                 <div className="inline-block bg-blue-900 bg-opacity-50 text-blue-300 px-4 py-2 rounded-full text-sm mb-4">
                   Threat Analysis <span className="alert-badge">ACTIVE INCIDENT</span>
                 </div>
-                <h1 className="text-4xl md:text-5xl font-bold mb-6">UK's <span className="gradient-text">Legal Aid Cyber Attack</span>: Everything We Know So Far</h1>
+                <h1 className="text-4xl md:text-5xl font-bold mb-6">UK&apos;s <span className="gradient-text">Legal Aid Cyber Attack</span>: Everything We Know So Far</h1>
                 <div className="flex items-center justify-center space-x-4 text-gray-400">
                   <span>May 20, 2025</span>
                   <span>•</span>
@@ -123,10 +124,12 @@ export default function UKLegalAidCyberAttack() {
                 </div>
               </header>
 
-              <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+              <Image src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
                    alt="UK Legal System" 
+                   width={1470}
+                   height={384}
                    className="blog-image w-full h-auto max-h-96 object-cover" />
-              <p className="text-center text-sm text-gray-400 mb-8">The UK's Legal Aid Agency breach exposes vulnerabilities in government systems </p>
+              <p className="text-center text-sm text-gray-400 mb-8">The UK&apos;s Legal Aid Agency breach exposes vulnerabilities in government systems </p>
 
               <div className="cisa-alert">
                 <div className="flex items-center">
@@ -139,7 +142,7 @@ export default function UKLegalAidCyberAttack() {
               </div>
 
               <p className="text-xl text-gray-300 mb-8 leading-relaxed">
-                The UK's Legal Aid Agency (LAA), overseen by the Ministry of Justice, has fallen victim to a major cyber attack. Many are estimating that this is one of the most significant breaches of sensitive data in the UK's legal sector to date. The attack has exposed deeply confidential information and disrupted critical services, triggering national concern.
+                The UK&apos;s Legal Aid Agency (LAA), overseen by the Ministry of Justice, has fallen victim to a major cyber attack. Many are estimating that this is one of the most significant breaches of sensitive data in the UK&apos;s legal sector to date. The attack has exposed deeply confidential information and disrupted critical services, triggering national concern.
               </p>
 
               <h2 className="text-2xl font-bold text-blue-400 mt-12 mb-6">What is the Legal Aid Agency?</h2>
@@ -147,7 +150,7 @@ export default function UKLegalAidCyberAttack() {
                 The Legal Aid Agency UK is an executive agency of the Ministry of Justice. It provides criminal and civil legal aid and advice in England and Wales. The agency helps the public deal with legal problems through solicitors, barristers and the not-for-profit sector.
               </p>
               <p className="text-gray-300 mb-6">
-                Eligibility for legal aid depends on an applicant's financial situation and the merits of their case. This means the agency handles extremely sensitive personal and financial information for some of society's most vulnerable individuals.
+                Eligibility for legal aid depends on an applicant&apos;s financial situation and the merits of their case. This means the agency handles extremely sensitive personal and financial information for some of society&apos;s most vulnerable individuals.
               </p>
 
               <h2 className="text-2xl font-bold text-blue-400 mt-12 mb-6">The Breach Timeline</h2>
@@ -167,8 +170,10 @@ export default function UKLegalAidCyberAttack() {
                 </div>
               </div>
 
-              <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+              <Image src="https://images.unsplash.com/photo-1563986768609-322da13575f3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
                    alt="Cyber attack visualization" 
+                   width={1470}
+                   height={384}
                    className="blog-image w-full h-auto max-h-96 object-cover" />
 
               <h2 className="text-2xl font-bold text-blue-400 mt-12 mb-6">What Data Was Compromised?</h2>
@@ -185,14 +190,14 @@ export default function UKLegalAidCyberAttack() {
 
               <div className="border-l-4 border-red-500 pl-4 my-8 bg-gray-800 bg-opacity-30 py-3">
                 <p className="italic text-gray-300">
-                  "Given the nature of legal aid cases, many affected individuals are already vulnerable. This includes victims of domestic violence, individuals undergoing family disputes, and those facing criminal prosecution. The exposure raises significant concerns about fraud, identity theft, and personal safety."
+                  &quot;Given the nature of legal aid cases, many affected individuals are already vulnerable. This includes victims of domestic violence, individuals undergoing family disputes, and those facing criminal prosecution. The exposure raises significant concerns about fraud, identity theft, and personal safety.&quot;
                 </p>
                 <p className="text-sm text-gray-400 mt-2">- Ministry of Justice spokesperson</p>
               </div>
 
               <h2 className="text-2xl font-bold text-blue-400 mt-12 mb-6">What Went Wrong?</h2>
               <p className="text-gray-300 mb-6">
-                While the full attack vector hasn't been disclosed, cybersecurity experts point to several likely factors:
+                While the full attack vector hasn&apos;t been disclosed, cybersecurity experts point to several likely factors:
               </p>
               
               <div className="grid md:grid-cols-2 gap-6 my-8">
@@ -201,7 +206,7 @@ export default function UKLegalAidCyberAttack() {
                     <i className="fas fa-server"></i>
                   </div>
                   <h3 className="text-lg font-bold mb-2">Outdated Infrastructure</h3>
-                  <p className="text-gray-300">Heavy reliance on legacy systems with known vulnerabilities that weren't patched.</p>
+                  <p className="text-gray-300">Heavy reliance on legacy systems with known vulnerabilities that weren&apos;t patched.</p>
                 </div>
                 <div className="bg-gray-800 bg-opacity-60 border border-gray-700 rounded-xl p-6">
                   <div className="text-red-400 text-2xl mb-3">
@@ -235,7 +240,7 @@ export default function UKLegalAidCyberAttack() {
 
               <h2 className="text-2xl font-bold text-blue-400 mt-12 mb-6">Key Lessons for Organizations</h2>
               <p className="text-gray-300 mb-6">
-                This attack follows other high-profile UK breaches (Harrods, Marks & Spencer, Co-op) and offers critical lessons:
+                This attack follows other high-profile UK breaches (Harrods, Marks &amp; Spencer, Co-op) and offers critical lessons:
               </p>
 
               <div className="key-lesson">
@@ -245,7 +250,7 @@ export default function UKLegalAidCyberAttack() {
 
               <div className="key-lesson">
                 <h3 className="text-lg font-bold mb-2">2. Regular security audits are essential</h3>
-                <p className="text-gray-300">Identifying and addressing weaknesses before they're exploited is crucial. This requires regular penetration testing and staying informed about emerging threats.</p>
+                <p className="text-gray-300">Identifying and addressing weaknesses before they&apos;re exploited is crucial. This requires regular penetration testing and staying informed about emerging threats.</p>
               </div>
 
               <div className="key-lesson">
@@ -266,8 +271,10 @@ export default function UKLegalAidCyberAttack() {
               <footer className="mt-16 border-t border-gray-800 pt-12">
                 <h3 className="text-2xl font-bold mb-6">About the Author</h3>
                 <div className="flex items-start">
-                  <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" 
+                  <Image src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" 
                        alt="Priya Sharma" 
+                       width={64}
+                       height={64}
                        className="w-16 h-16 rounded-full object-cover mr-6" />
                   <div>
                     <h4 className="text-xl font-bold"> Priya Sharma</h4>

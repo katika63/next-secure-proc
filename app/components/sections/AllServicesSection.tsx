@@ -64,7 +64,7 @@ const AllServicesSection = () => {
           </h2>
           <p className="text-lg text-gray-300 max-w-3xl mx-auto">
             From threat detection to incident response, we provide end-to-end cybersecurity services 
-            tailored to your organization's specific needs and risk profile.
+            tailored to your organization&apos;s specific needs and risk profile.
           </p>
         </div>
 

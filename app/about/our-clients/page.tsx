@@ -150,7 +150,7 @@ export default function OurClientsPage() {
                 </div>
 
                 <blockquote className="border-l-4 border-blue-500 pl-4 mb-6">
-                  <p className="text-gray-300 italic">"{category.testimonial}"</p>
+                  <p className="text-gray-300 italic">&quot;{category.testimonial}&quot;</p>
                 </blockquote>
 
                 <div className="grid grid-cols-3 gap-4 text-center">

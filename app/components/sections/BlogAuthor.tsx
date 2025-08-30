@@ -1,5 +1,7 @@
 import { getAuthor } from '../../lib/authors'
 
+import Image from 'next/image'
+
 export default function BlogAuthor({ authorSlug }: { authorSlug: string }) {
   const author = getAuthor(authorSlug)
   
@@ -8,9 +10,11 @@ export default function BlogAuthor({ authorSlug }: { authorSlug: string }) {
       <div className="max-w-4xl mx-auto border-t border-gray-800 pt-12">
         <h3 className="text-2xl font-bold mb-6 text-white">About the Author</h3>
         <div className="flex items-start">
-          <img 
+          <Image 
             src={author.image} 
             alt={author.name} 
+            width={64}
+            height={64}
             className="w-16 h-16 rounded-full object-cover mr-6"
           />
           <div>

@@ -123,7 +123,7 @@ export default function TermsOfService() {
                   Important Notice
                 </h3>
                 <p className="text-gray-300">
-                  Please read these Terms of Service carefully before using our services. By accessing or using BTMSecurity's services, you agree to be bound by these Terms and our Privacy Policy.
+                  Please read these Terms of Service carefully before using our services. By accessing or using BTMSecurity&apos;s services, you agree to be bound by these Terms and our Privacy Policy.
                 </p>
               </div>
 
@@ -205,7 +205,7 @@ export default function TermsOfService() {
 
               <h3 className="text-xl font-semibold text-blue-300 mt-8 mb-4">5.2 Financial Limitations</h3>
               <p className="text-gray-300 mb-4">
-                BTMSecurity's total liability for any claim related to services provided shall not exceed the total fees paid by the client for the specific engagement giving rise to the claim.
+                BTMSecurity&apos;s total liability for any claim related to services provided shall not exceed the total fees paid by the client for the specific engagement giving rise to the claim.
               </p>
 
               <h2 className="text-2xl font-bold text-blue-400 mt-12 mb-6">6. Intellectual Property</h2>
@@ -262,7 +262,7 @@ export default function TermsOfService() {
                   <div>
                     <h4 className="text-xl font-semibold mb-4 text-blue-400">Approval</h4>
                     <p className="text-gray-300">
-                      This document has been reviewed and approved by BTMSecurity's legal team and executive leadership.
+                      This document has been reviewed and approved by BTMSecurity&apos;s legal team and executive leadership.
                     </p>
                   </div>
                 </div>

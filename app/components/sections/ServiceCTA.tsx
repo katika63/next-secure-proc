@@ -21,7 +21,7 @@ const ServiceCTA = ({ service }: ServiceCTAProps) => {
           </h2>
           
           <p className="text-lg text-gray-300 mb-8 leading-relaxed">
-            Don't wait for a security incident to happen. Contact our experts today to learn 
+            Don&apos;t wait for a security incident to happen. Contact our experts today to learn 
             how our {service} services can protect your organization from cyber threats.
           </p>
           

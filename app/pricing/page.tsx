@@ -73,7 +73,7 @@ export default function PricingPage() {
             
             <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8 leading-relaxed">
               Transparent pricing for comprehensive cybersecurity solutions. 
-              Choose the plan that best fits your organization's needs.
+              Choose the plan that best fits your organization&apos;s needs.
             </p>
             
             <div className="flex flex-wrap justify-center gap-6 text-sm">

@@ -6,7 +6,7 @@ export default function ServiceOverview() {
           <div>
             <h2 className="text-3xl font-bold mb-6 gradient-text">Close Security Gaps Intelligently</h2>
             <p className="text-gray-300 mb-6 text-lg">
-              BTMSecurity's Vulnerability Management combines <span className="text-blue-400">automated scanning</span> with <span className="text-blue-400">human expertise</span> to reduce your attack surface by an average of <span className="font-bold">83% within 90 days</span>. Our system prioritizes risks based on actual exploit activity, not just CVSS scores.
+              BTMSecurity&apos;s Vulnerability Management combines <span className="text-blue-400">automated scanning</span> with <span className="text-blue-400">human expertise</span> to reduce your attack surface by an average of <span className="font-bold">83% within 90 days</span>. Our system prioritizes risks based on actual exploit activity, not just CVSS scores.
             </p>
             
             <div className="space-y-4 mb-8">

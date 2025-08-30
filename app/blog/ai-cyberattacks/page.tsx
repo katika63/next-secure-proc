@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Head from 'next/head'
+import Image from 'next/image'
 
 export default function AICyberThreats() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -126,7 +127,7 @@ export default function AICyberThreats() {
 
               <div className="bg-gray-800 bg-opacity-60 backdrop-blur-md border border-gray-700 rounded-xl overflow-hidden mb-12">
                 <div className="h-64 bg-gradient-to-r from-blue-900 to-blue-800 flex items-center justify-center">
-                  <img src="/img/ai-cyber-attacks.jpg" alt="AI Cybersecurity" className="h-full object-cover w-full opacity-90" />
+                  <Image src="/img/ai-cyber-attacks.jpg" alt="AI Cybersecurity" width={800} height={256} className="h-full object-cover w-full opacity-90" />
                 </div>
               </div>
 
@@ -143,7 +144,7 @@ export default function AICyberThreats() {
                     <i className="fas fa-language"></i>
                   </div>
                   <h3 className="text-lg font-bold mb-2 text-white">Polyglot Phishing</h3>
-                  <p className="text-gray-300">AI-generated emails that adapt linguistic patterns to match the recipient's communication style with 98% accuracy.</p>
+                  <p className="text-gray-300">AI-generated emails that adapt linguistic patterns to match the recipient&apos;s communication style with 98% accuracy.</p>
                 </div>
                 <div className="bg-gray-800 bg-opacity-60 border border-gray-700 rounded-xl p-6">
                   <div className="text-blue-400 text-2xl mb-3">
@@ -163,7 +164,7 @@ export default function AICyberThreats() {
 
               <div className="border-l-4 border-blue-500 pl-4 my-8 bg-gray-800 bg-opacity-30 py-3">
                 <p className="italic text-gray-300">
-                  "We intercepted a campaign where AI-generated voice clones successfully bypassed voice authentication systems at three major banks. The attackers trained the models using just 30 seconds of publicly available CEO interview footage."
+                  &quot;We intercepted a campaign where AI-generated voice clones successfully bypassed voice authentication systems at three major banks. The attackers trained the models using just 30 seconds of publicly available CEO interview footage.&quot;
                 </p>
                 <p className="text-sm text-gray-400 mt-2">- BTM Threat Intelligence Team</p>
               </div>
@@ -171,7 +172,7 @@ export default function AICyberThreats() {
               <h2 className="text-2xl font-bold text-blue-400 mt-12 mb-6">Defensive Countermeasures</h2>
 
               <h3 className="text-xl font-semibold text-blue-300 mt-8 mb-4">1. AI vs. AI Defense</h3>
-              <p className="text-gray-300 mb-4">Next-generation security systems now employ defensive AI to detect adversarial patterns:</p>
+                <p className="text-gray-300 mb-4">Next-generation security systems now employ defensive AI to detect adversarial patterns:</p>
               
               <div className="bg-black bg-opacity-50 p-4 rounded-lg my-4 overflow-x-auto">
                 <pre><code className="text-sm text-green-300"># Sample AI defense rule (pseudo-code)
@@ -193,7 +194,7 @@ if (email.sender_verification == 'pass'
               </ul>
 
               <h3 className="text-xl font-semibold text-blue-300 mt-8 mb-4">3. Deception Technology</h3>
-              <p className="text-gray-300 mb-4">We're deploying AI-powered honeypots that learn from attacker behavior:</p>
+              <p className="text-gray-300 mb-4">We&apos;re deploying AI-powered honeypots that learn from attacker behavior:</p>
               <div className="bg-gray-800 bg-opacity-60 border border-gray-700 rounded-xl p-6 my-6">
                 <div className="flex items-start">
                   <div className="w-10 h-10 rounded-full bg-blue-900 bg-opacity-50 flex items-center justify-center mr-4 mt-1">
@@ -239,22 +240,22 @@ if (email.sender_verification == 'pass'
                   <i className="fas fa-lightbulb text-blue-400 mr-3"></i>
                   Key Insight
                 </h3>
-                <p className="text-gray-300">
-                  Organizations using AI-enhanced defenses see <strong>89% faster</strong> threat detection and <strong>60% lower</strong> incident response costs compared to traditional methods, based on our 2024 client data.
-                </p>
+                <p className="text-gray-300 mb-4">Organizations using AI-enhanced defenses see <strong>89% faster</strong> threat detection and <strong>60% lower</strong> incident response costs compared to traditional methods, based on our 2024 client data.</p>
               </div>
 
               <footer className="mt-16 border-t border-gray-800 pt-12">
                 <h3 className="text-2xl font-bold mb-6 text-white">About the Author</h3>
                 <div className="flex items-start">
-                  <img src="/img/amir.jpg" 
+                  <Image src="/img/amir.jpg" 
                        alt="Amir Al-Farouqi" 
+                       width={64}
+                       height={64}
                        className="w-16 h-16 rounded-full object-cover mr-6" />
                   <div>
                     <h4 className="text-xl font-bold text-white">Amir Al-Farouqi</h4>
                     <p className="text-gray-400 mb-3">Chief Threat Researcher, BTMSecurity</p>
                     <p className="text-gray-300">
-                      Experienced in adversarial AI research. Contributed to MITRE ATT&CK framework. Developed patented algorithms for behavioral anomaly detection used by Fortune 500 companies.
+                      Experienced in adversarial AI research. Contributed to MITRE ATT&amp;CK framework. Developed patented algorithms for behavioral anomaly detection used by Fortune 500 companies.
                     </p>
                   </div>
                 </div>
