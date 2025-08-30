@@ -56,7 +56,7 @@ const HeroSection = () => {
 
           <div className="flex gap-4 flex-wrap">
             <Link 
-              href="#contact"
+              href="/contact"
               className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-all duration-300"
             >
               Contact Security Team
