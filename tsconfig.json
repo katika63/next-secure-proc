@@ -23,6 +23,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/ai-chat/page.js"],
-  "exclude": ["node_modules", "sanity.config.ts", "sanity/schemas"]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules", "studio-cyber-security-blog", "sanity.config.ts", "sanity/schemas"]
 }
