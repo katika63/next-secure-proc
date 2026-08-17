@@ -1,7 +1,8 @@
 import HeroSection from './components/sections/HeroSection'
 import TrustedBySection from './components/sections/TrustedBySection'
 import ServicesSection from './components/sections/ServicesSection'
-import ClientsSection from './components/sections/ClientsSection'
+import SecurityDashboardSection from './components/sections/SecurityDashboardSection'
+import AttackSurfaceSection from './components/sections/AttackSurfaceSection'
 import CookieBanner from './components/sections/CookieBanner'
 import SmartsuppChat from './components/sections/SmartsuppChat'
 
@@ -11,7 +12,8 @@ export default function Home() {
       <HeroSection />
       <TrustedBySection />
       <ServicesSection />
-      <ClientsSection />
+      <SecurityDashboardSection />
+      <AttackSurfaceSection />
       <CookieBanner />
       <SmartsuppChat />
     </>

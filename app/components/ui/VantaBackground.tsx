@@ -17,19 +17,25 @@ const VantaBackground = () => {
       if (typeof window !== 'undefined' && window.VANTA && window.THREE) {
         vantaEffect = window.VANTA.NET({
           el: "#vanta-bg",
-          color: 0x3b82f6,
-          backgroundColor: 0x0f172a,
-          points: 12,
-          maxDistance: 20,
-          spacing: 15
+          mouseControls: true,
+          touchControls: true,
+          gyroControls: false,
+          minHeight: 200.00,
+          minWidth: 200.00,
+          scale: 1.00,
+          scaleMobile: 1.00,
+          color: 0x0084ff,
+          backgroundColor: 0x030712,
+          points: 14.00,
+          maxDistance: 22.00,
+          spacing: 14.00
         })
       }
     }
 
-    // Load Three.js first, then Vanta
+    // Load Three.js first, then Vanta.js
     const loadScripts = async () => {
       try {
-        // Load Three.js
         if (!window.THREE) {
           await new Promise((resolve, reject) => {
             const script = document.createElement('script')
@@ -40,7 +46,6 @@ const VantaBackground = () => {
           })
         }
 
-        // Load Vanta.js
         if (!window.VANTA) {
           await new Promise((resolve, reject) => {
             const script = document.createElement('script')
@@ -51,10 +56,9 @@ const VantaBackground = () => {
           })
         }
 
-        // Initialize Vanta effect
         initVanta()
       } catch (error) {
-        console.error('Failed to load Vanta.js:', error)
+        console.error('Failed to load Vanta.js 3D background:', error)
       }
     }
 
@@ -67,7 +71,7 @@ const VantaBackground = () => {
     }
   }, [])
 
-  return <div id="vanta-bg" className="fixed top-0 left-0 w-full h-full -z-10" />
+  return <div id="vanta-bg" className="fixed top-0 left-0 w-full h-full pointer-events-none -z-10" />
 }
 
 export default VantaBackground

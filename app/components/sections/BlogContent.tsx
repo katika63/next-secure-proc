@@ -23,9 +23,9 @@ type ContentType = {
 
 export default function BlogContent({ content }: { content: ContentType }) {
   return (
-    <section className="py-20 px-6 bg-gray-900 bg-opacity-90">
+    <section className="py-20 px-6 bg-transparent">
       <div className="max-w-4xl mx-auto">
-        <div className="bg-gray-800 bg-opacity-60 backdrop-blur-md border border-gray-700 rounded-xl overflow-hidden mb-12">
+        <div className="bg-[#070e1e]/80 border border-[#1e2942] rounded-xl overflow-hidden mb-12 backdrop-blur-md">
           <div className="h-64 bg-gradient-to-r from-blue-900 to-blue-800 flex items-center justify-center">
             <Image 
               src={content.image} 

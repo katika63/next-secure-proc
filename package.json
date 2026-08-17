@@ -7,10 +7,14 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "studio": "npm --prefix studio-cyber-security-blog run dev"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
+    "@portabletext/react": "^8.0.0",
+    "@sanity/client": "^8.0.0",
+    "@sanity/image-url": "^2.1.1",
     "firebase": "^12.1.0",
     "framer-motion": "^11.0.0",
     "next": "15.5.2",

@@ -12,7 +12,7 @@ interface ServiceHeroProps {
 
 const ServiceHero = ({ title, subtitle, description, icon, color }: ServiceHeroProps) => {
   return (
-    <section className="relative py-20 px-6 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
+    <section className="relative py-20 px-6 bg-transparent text-white">
       <div className="max-w-7xl mx-auto">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           

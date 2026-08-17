@@ -165,7 +165,7 @@ export default function CareersPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative py-20 px-6 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white animate-gradient">
+      <section className="relative py-20 px-6 bg-transparent text-white">
         <div className="max-w-7xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

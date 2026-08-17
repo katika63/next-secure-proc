@@ -29,9 +29,9 @@ export default function RootLayout({
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" 
         />
       </head>
-      <body className={`${inter.className} bg-gray-900 text-gray-100 font-sans`}>
+      <body className={`${inter.className} bg-[#030712] text-slate-100 font-sans`}>
         <VantaBackground />
-        <div className="content-wrapper min-h-screen relative z-10 bg-gray-900/85">
+        <div className="content-wrapper min-h-screen relative z-10 bg-[#030712]/40 backdrop-blur-[2px]">
           <Navigation />
           <main>
             {children}

@@ -6,7 +6,7 @@ export default function BlogAuthor({ authorSlug }: { authorSlug: string }) {
   const author = getAuthor(authorSlug)
   
   return (
-    <section className="py-16 px-6 bg-gray-900">
+    <section className="py-16 px-6 bg-transparent">
       <div className="max-w-4xl mx-auto border-t border-gray-800 pt-12">
         <h3 className="text-2xl font-bold mb-6 text-white">About the Author</h3>
         <div className="flex items-start">
