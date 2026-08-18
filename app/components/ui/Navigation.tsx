@@ -250,7 +250,7 @@ const Navigation = ({ currentPath = '/' }: NavigationProps) => {
             <svg className="w-4 h-4 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
             </svg>
-            Client Portal
+            AI Security
           </Link>
 
           <Link
@@ -298,7 +298,7 @@ const Navigation = ({ currentPath = '/' }: NavigationProps) => {
             <Link href="/contact" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-slate-200 font-medium">Contact</Link>
             
             <div className="pt-4 border-t border-[#1e2942] flex flex-col gap-3">
-              <Link href="/ai-security" onClick={() => setMobileMenuOpen(false)} className="w-full text-center py-2.5 border border-[#1e2942] rounded-lg text-slate-200 font-medium">Client Portal</Link>
+              <Link href="/ai-security" onClick={() => setMobileMenuOpen(false)} className="w-full text-center py-2.5 border border-[#1e2942] rounded-lg text-slate-200 font-medium">AI Security</Link>
               <Link href="/contact" onClick={() => setMobileMenuOpen(false)} className="w-full text-center py-2.5 bg-blue-600 rounded-lg text-white font-semibold">Contact Us</Link>
             </div>
           </motion.div>
