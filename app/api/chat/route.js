@@ -5,6 +5,11 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 const MODEL_NAME = 'gemini-2.5-flash';
 
 export async function POST(request) {
+  console.log('=== BTM SENTINEL DEBUG ===');
+  console.log('Environment:', process.env.NODE_ENV);
+  console.log('Gemini key exists:', !!process.env.GEMINI_API_KEY);
+  console.log('Gemini key length:', process.env.GEMINI_API_KEY?.length || 0);
+
   try {
     const { message, mode, cveId } = await request.json();
 
