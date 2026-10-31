@@ -31,9 +31,15 @@ export async function POST(request) {
             model: MODEL_NAME,
             systemInstruction:
               'You are BTM SENTINEL AI SECURITY TERMINAL. Output raw CLI-style plaintext only. ' +
-              'No markdown, no asterisks, no emoji, no bullet symbols. Be concise and technical.'
+              'No markdown, no asterisks, no emoji, no bullet symbols. Be concise and technical.',
+            generationConfig: {
+              thinkingConfig: { thinkingBudget: 0 }
+            }
           });
-          const result = await model.generateContent(message);
+          const result = await Promise.race([
+            model.generateContent(message),
+            new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 15000))
+          ]);
           return NextResponse.json({ response: result.response.text() });
         } catch (err) {
           // Fall through to fallback
@@ -66,7 +72,11 @@ export async function POST(request) {
           const model = genAI.getGenerativeModel({
             model: MODEL_NAME,
             systemInstruction:
-              'You are BTMSecurity Sentinel AI, a Vulnerability Intelligence engine. Output strictly valid JSON only.'
+              'You are BTMSecurity Sentinel AI, a Vulnerability Intelligence engine. Output strictly valid JSON only.',
+            generationConfig: {
+              responseMimeType: 'application/json',
+              thinkingConfig: { thinkingBudget: 0 }
+            }
           });
 
           const prompt =
@@ -87,10 +97,12 @@ export async function POST(request) {
   }
 }`;
 
-          const result = await model.generateContent({
-            contents: [{ role: 'user', parts: [{ text: prompt }] }],
-            generationConfig: { responseMimeType: 'application/json' }
-          });
+          const result = await Promise.race([
+            model.generateContent({
+              contents: [{ role: 'user', parts: [{ text: prompt }] }]
+            }),
+            new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 15000))
+          ]);
 
           const parsed = JSON.parse(result.response.text());
           return NextResponse.json({
@@ -113,9 +125,15 @@ export async function POST(request) {
         const model = genAI.getGenerativeModel({
           model: MODEL_NAME,
           systemInstruction:
-            'You are BTMSecurity Sentinel AI — an expert cybersecurity AI assistant. Respond with actionable security guidance.'
+            'You are BTMSecurity Sentinel AI — an expert cybersecurity AI assistant. Respond with actionable security guidance.',
+          generationConfig: {
+            thinkingConfig: { thinkingBudget: 0 }
+          }
         });
-        const result = await model.generateContent(message);
+        const result = await Promise.race([
+          model.generateContent(message),
+          new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 15000))
+        ]);
         return NextResponse.json({ response: formatSecurityResponse(result.response.text()) });
       } catch (err) {
         // Fall through to chat fallback

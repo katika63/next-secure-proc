@@ -242,9 +242,9 @@ export default function TermsOfService() {
                   For questions about these Terms of Service, please contact our legal team at:
                 </p>
                 <p className="text-gray-300 mt-2">
-                  Email: legal@btmsecurity.com<br />
-                  Phone: +44 (0)20 7946 0958<br />
-                  Address: 123 Cyber Security Lane, London, EC2A 4LT, United Kingdom
+                  Email: legal@btmsec.com<br />
+                  Phone: +2347045981315<br />
+                  Operations: BTM Security Global Operations
                 </p>
               </div>
 

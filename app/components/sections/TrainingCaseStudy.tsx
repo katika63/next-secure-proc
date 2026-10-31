@@ -8,9 +8,9 @@ export default function TrainingCaseStudy() {
             <div className="p-8">
               <div className="flex items-center mb-4">
                 <i className="fas fa-university text-blue-400 text-2xl mr-3"></i>
-                <h3 className="text-2xl font-bold text-gray-200">University Security Training</h3>
+                <h2 className="text-2xl font-bold text-gray-200">University Security Training</h2>
               </div>
-              <h4 className="text-xl font-bold mb-4 text-blue-400">Higher Education Case Study</h4>
+              <h3 className="text-xl font-bold mb-4 text-blue-400">Higher Education Case Study</h3>
               <Image 
                 src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
                 alt="University security training"

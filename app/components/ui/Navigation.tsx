@@ -71,7 +71,7 @@ const Navigation = ({ currentPath = '/' }: NavigationProps) => {
           {/* 1. Home */}
           <Link 
             href="/" 
-            className={`hover:text-white transition-colors py-2 border-b-2 ${currentPath === '/' ? 'text-white border-blue-500 font-semibold' : 'border-transparent'}`}
+            className={`hover:text-white transition-colors py-2 ${pathname === '/' ? 'text-white font-semibold' : ''}`}
           >
             Home
           </Link>
@@ -144,7 +144,7 @@ const Navigation = ({ currentPath = '/' }: NavigationProps) => {
           {/* 3. Pricing */}
           <Link 
             href="/pricing" 
-            className={`hover:text-white transition-colors py-2 border-b-2 ${currentPath === '/pricing' ? 'text-white border-blue-500 font-semibold' : 'border-transparent'}`}
+            className={`hover:text-white transition-colors py-2 ${pathname === '/pricing' ? 'text-white font-semibold' : ''}`}
           >
             Pricing
           </Link>
@@ -213,11 +213,12 @@ const Navigation = ({ currentPath = '/' }: NavigationProps) => {
                   <Link href="/about/our-clients" onClick={closeAllDropdowns} className="block px-4 py-2.5 text-sm text-slate-300 hover:text-white hover:bg-blue-600/20 rounded-lg transition-colors">
                     Our Clients
                   </Link>
+                  <Link href="/operations" onClick={closeAllDropdowns} className="block px-4 py-2.5 text-sm text-slate-300 hover:text-white hover:bg-blue-600/20 rounded-lg transition-colors flex items-center justify-between">
+                    <span>Areas of Operation</span>
+                    <span className="text-[10px] bg-blue-500/20 text-blue-400 px-1.5 py-0.5 rounded border border-blue-500/30 font-mono">GLOBAL</span>
+                  </Link>
                   <Link href="/testimonials" onClick={closeAllDropdowns} className="block px-4 py-2.5 text-sm text-slate-300 hover:text-white hover:bg-blue-600/20 rounded-lg transition-colors">
                     Testimonials
-                  </Link>
-                  <Link href="/about/our-team" onClick={closeAllDropdowns} className="block px-4 py-2.5 text-sm text-slate-300 hover:text-white hover:bg-blue-600/20 rounded-lg transition-colors">
-                    Our Team
                   </Link>
                 </motion.div>
               )}
@@ -227,7 +228,7 @@ const Navigation = ({ currentPath = '/' }: NavigationProps) => {
           {/* 6. Career */}
           <Link 
             href="/careers" 
-            className={`hover:text-white transition-colors py-2 border-b-2 ${currentPath === '/careers' ? 'text-white border-blue-500 font-semibold' : 'border-transparent'}`}
+            className={`hover:text-white transition-colors py-2 ${pathname === '/careers' ? 'text-white font-semibold' : ''}`}
           >
             Career
           </Link>
@@ -235,7 +236,7 @@ const Navigation = ({ currentPath = '/' }: NavigationProps) => {
           {/* 7. Contact */}
           <Link 
             href="/contact" 
-            className={`hover:text-white transition-colors py-2 border-b-2 ${currentPath === '/contact' ? 'text-white border-blue-500 font-semibold' : 'border-transparent'}`}
+            className={`hover:text-white transition-colors py-2 ${pathname === '/contact' ? 'text-white font-semibold' : ''}`}
           >
             Contact
           </Link>
@@ -294,6 +295,10 @@ const Navigation = ({ currentPath = '/' }: NavigationProps) => {
             <Link href="/pricing" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-slate-200 font-medium">Pricing</Link>
             <Link href="/blog" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-slate-200 font-medium">Resources</Link>
             <Link href="/about/our-mission" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-slate-200 font-medium">About Us</Link>
+            <Link href="/operations" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-slate-200 font-medium flex items-center justify-between">
+              <span>Areas of Operation</span>
+              <span className="text-[10px] bg-blue-500/20 text-blue-400 px-1.5 py-0.5 rounded border border-blue-500/30 font-mono">GLOBAL</span>
+            </Link>
             <Link href="/careers" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-slate-200 font-medium">Career</Link>
             <Link href="/contact" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-slate-200 font-medium">Contact</Link>
             

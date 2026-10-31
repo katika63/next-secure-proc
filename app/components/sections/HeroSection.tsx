@@ -55,45 +55,52 @@ const HeroSection = () => {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.7, ease: 'easeOut' }}
         >
-          {/* Real-Time Visitor IP Detector Badge */}
-          <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-[#0c1a38]/80 border border-[#1e3466]/80 backdrop-blur-md shadow-md">
-            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping shrink-0" />
-            <span className="text-xs font-mono font-medium text-blue-400 tracking-wide">
-              {visitorInfo}
-            </span>
+          {/* Operational Scope Badge */}
+          <div className="flex flex-wrap items-center gap-2">
+            <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-[#0c1a38]/80 border border-[#1e3466]/80 backdrop-blur-md shadow-md">
+              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping shrink-0" />
+              <span className="text-xs font-mono font-medium text-blue-400 tracking-wide">
+                {visitorInfo}
+              </span>
+            </div>
+            <Link
+              href="/operations"
+              className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-[#0a1124] border border-[#1e2942] text-[11px] font-mono text-slate-400 hover:text-cyan-400 hover:border-cyan-500/40 transition-colors"
+            >
+              <i className="fas fa-shield text-[10px] text-emerald-400" />
+              <span>Global Reach • African Priority</span>
+            </Link>
           </div>
 
           <div className="space-y-4">
-            <h1 className="text-3xl sm:text-4xl lg:text-[42px] font-bold tracking-tight leading-tight">
-              <span className="block text-white">AI-POWERED</span>
-              <span className="block text-white">CYBER DEFENSE.</span>
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-500 to-cyan-400">
-                ALWAYS AHEAD.
-              </span>
+            <h1 className="text-3xl sm:text-4xl lg:text-[44px] font-extrabold tracking-tight leading-[1.18] text-white">
+              AI-Powered Cyber Defense for <span className="gradient-text-blue">Modern Enterprises</span>
             </h1>
 
-            <p className="text-slate-300 text-base lg:text-lg leading-relaxed max-w-lg">
-              Intelligent. Proactive. Unstoppable. Protecting your digital world 24/7 with AI-driven security operations.
+            <p className="text-slate-300 text-base lg:text-lg leading-relaxed max-w-xl">
+              BTM Security protects web applications, APIs, cloud environments, and customer data through authorized assessment, continuous monitoring, incident response, and security advisory.
             </p>
           </div>
 
-          {/* Action Buttons matching PNG */}
+          {/* Action Buttons: Primary & Secondary CTAs */}
           <div className="flex flex-wrap items-center gap-4">
             <Link 
-              href="/ai-security"
-              className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white px-6 py-3.5 rounded-xl font-semibold text-sm shadow-lg shadow-blue-600/35 hover:shadow-blue-500/50 transition-all duration-300 transform hover:-translate-y-0.5"
+              id="hero-cta-consultation"
+              href="/contact?type=consultation"
+              className="flex items-center gap-2.5 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white px-6 py-3.5 rounded-xl font-semibold text-sm shadow-lg shadow-blue-600/35 hover:shadow-blue-500/50 transition-all duration-300 transform hover:-translate-y-0.5"
             >
-              Try BTM Security AI
+              <span>Book a Free Risk Consultation</span>
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
             </Link>
 
             <Link 
-              href="/contact"
-              className="flex items-center gap-2 bg-[#0a1124]/80 hover:bg-[#121c38] border border-[#1e2942] hover:border-slate-500 text-slate-200 px-6 py-3.5 rounded-xl font-semibold text-sm transition-all duration-300 backdrop-blur-md"
+              id="hero-cta-services"
+              href="/services"
+              className="flex items-center gap-2 bg-[#0a1124]/90 hover:bg-[#121c38] border border-[#1e2942] hover:border-blue-500/60 text-slate-200 hover:text-white px-6 py-3.5 rounded-xl font-semibold text-sm transition-all duration-300 backdrop-blur-md"
             >
-              Request a Demo
+              <span>View Services</span>
             </Link>
           </div>
 
@@ -160,9 +167,12 @@ const HeroSection = () => {
             
             {/* Widget Top Header Bar matching screenshot */}
             <div className="flex items-center justify-between pb-4 border-b border-[#0f2347]">
-              <div className="flex items-center space-x-2.5">
-                <span className="text-sm font-bold tracking-wider text-slate-200 font-mono uppercase">
+              <div>
+                <span className="text-sm font-bold tracking-wider text-slate-200 font-mono uppercase block">
                   GLOBAL DEFENSE GRID
+                </span>
+                <span className="text-[10px] text-slate-400 font-mono block">
+                  Worldwide SOC Telemetry
                 </span>
               </div>
 

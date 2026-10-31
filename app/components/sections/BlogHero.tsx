@@ -44,7 +44,7 @@ export default function BlogHero({
             <span>•</span>
             <span>3 mins read</span>
             <span>•</span>
-            <span>By <a href="#" className="text-blue-400">{author.name}</a></span>
+            <span>By <span className="text-blue-400 font-medium">{author.name}</span></span>
           </div>
         </div>
       </div>

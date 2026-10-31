@@ -184,10 +184,10 @@ export default function ServicesPage() {
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <a href="/contact" className="bg-white text-blue-800 hover:bg-gray-100 px-8 py-4 rounded-lg font-bold transition duration-300 transform hover:scale-105">
-                Request Consultation
+                Book a 15-Minute Scoping Call
               </a>
-              <a href="tel:+447901959945" className="border border-white text-white hover:bg-blue-700 px-8 py-4 rounded-lg font-bold transition duration-300 transform hover:scale-105">
-                Call Now: +44 7901959945
+              <a href="tel:+2347045981315" className="border border-white text-white hover:bg-blue-700 px-8 py-4 rounded-lg font-bold transition duration-300 transform hover:scale-105">
+                Call Now: +234 704 598 1315
               </a>
             </div>
           </div>

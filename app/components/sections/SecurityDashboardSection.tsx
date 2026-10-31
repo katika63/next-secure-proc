@@ -52,10 +52,11 @@ const SecurityDashboardSection = () => {
   ]
 
   return (
-    <section className="py-16 px-6 bg-transparent relative">
+    <section aria-labelledby="threat-intel-heading" className="py-16 px-6 bg-transparent relative">
+      <h2 id="threat-intel-heading" className="sr-only">Live Threat Intelligence and Security Posture</h2>
       <div className="max-w-7xl mx-auto grid lg:grid-cols-12 gap-8">
         
-        {/* Left Box: LIVE THREAT INTELLIGENCE (5 Cols) */}
+        {/* Left Box: LIVE THREAT INTELLIGENCE (4 Cols) */}
         <motion.div 
           className="lg:col-span-4 bg-[#070e1e]/90 border border-[#1e2942] rounded-2xl p-6 flex flex-col justify-between shadow-2xl backdrop-blur-xl"
           initial={{ opacity: 0, y: 20 }}
@@ -66,9 +67,9 @@ const SecurityDashboardSection = () => {
           <div>
             {/* Header */}
             <div className="flex items-center justify-between pb-4 border-b border-[#1e2942]">
-              <span className="text-xs font-bold tracking-widest text-slate-300 font-mono uppercase">
+              <h3 className="text-xs font-bold tracking-widest text-slate-300 font-mono uppercase">
                 LIVE THREAT INTELLIGENCE
-              </span>
+              </h3>
               <div className="flex items-center space-x-1.5 px-2.5 py-0.5 rounded-full bg-rose-950/60 border border-rose-500/40">
                 <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-ping" />
                 <span className="text-[10px] font-bold text-rose-400 font-mono">LIVE</span>
@@ -120,9 +121,9 @@ const SecurityDashboardSection = () => {
           <div>
             {/* Header */}
             <div className="pb-4 border-b border-[#1e2942]">
-              <span className="text-xs font-bold tracking-widest text-slate-300 font-mono uppercase">
+              <h3 className="text-xs font-bold tracking-widest text-slate-300 font-mono uppercase">
                 SECURITY POSTURE OVERVIEW
-              </span>
+              </h3>
             </div>
 
             {/* Content Grid */}

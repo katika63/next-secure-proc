@@ -19,7 +19,7 @@ const AllServicesSection = () => {
       description: 'Comprehensive vulnerability assessment and management services to identify and remediate security weaknesses.',
       features: ['Vulnerability scanning', 'Risk assessment', 'Patch management', 'Compliance reporting'],
       href: '/services/vulnerability-management',
-      color: 'from-purple-500 to-pink-500'
+      color: 'from-blue-500 to-cyan-500'
     },
     {
       icon: 'fas fa-ambulance',
@@ -27,7 +27,7 @@ const AllServicesSection = () => {
       description: 'Rapid incident response services to contain, investigate, and recover from security breaches and cyber attacks.',
       features: ['24/7 emergency response', 'Forensic analysis', 'Recovery planning', 'Post-incident review'],
       href: '/services/incident-response',
-      color: 'from-red-500 to-orange-500'
+      color: 'from-red-500 to-red-700'
     },
     {
       icon: 'fas fa-network-wired',
@@ -51,7 +51,7 @@ const AllServicesSection = () => {
       description: 'Comprehensive security awareness training programs to educate your team and strengthen your human firewall.',
       features: ['Awareness training', 'Phishing simulation', 'Policy development', 'Compliance training'],
       href: '/services/security-training',
-      color: 'from-yellow-500 to-orange-500'
+      color: 'from-cyan-500 to-blue-500'
     }
   ]
 

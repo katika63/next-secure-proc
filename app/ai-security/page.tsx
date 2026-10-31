@@ -413,11 +413,6 @@ export default function DynamicSentinelAIPage() {
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
             <span>IP: {visitorIp}</span>
           </div>
-          <Link href="/client-portal" className="flex items-center gap-1.5 px-2.5 py-1.5 sm:px-3 sm:py-1.5 rounded-lg bg-[#0a152d] border border-[#1e325c] hover:border-blue-500/50 text-slate-200 text-xs font-medium transition-all">
-            <svg className="w-3.5 h-3.5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
-            <span className="hidden sm:inline">AI Security</span>
-            <span className="sm:hidden">AI</span>
-          </Link>
           <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 flex items-center justify-center text-xs font-bold text-white shadow-md border border-blue-400/40">AD</div>
         </div>
       </header>

@@ -59,27 +59,27 @@ const ServiceHero = ({ title, subtitle, description, icon, color }: ServiceHeroP
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <div className="relative bg-gray-800/50 backdrop-blur-md border border-gray-700 rounded-2xl p-8">
+            <div className="relative bg-[#0a1124]/80 backdrop-blur-xl border border-[#1e2942] rounded-2xl p-8">
               <div className="grid grid-cols-2 gap-4">
-                <div className="bg-green-500/20 rounded-lg p-4 text-center">
-                  <i className="fas fa-shield-alt text-green-400 text-2xl mb-2"></i>
-                  <div className="text-sm text-gray-300">Protected</div>
-                  <div className="text-lg font-bold text-green-400">99.9%</div>
+                <div className="bg-[#040914] border border-[#1e2942] rounded-xl p-4 text-center">
+                  <i className="fas fa-shield-alt text-emerald-400 text-2xl mb-2"></i>
+                  <div className="text-sm text-slate-400">Protected</div>
+                  <div className="text-lg font-bold text-emerald-400">99.9%</div>
                 </div>
-                <div className="bg-blue-500/20 rounded-lg p-4 text-center">
+                <div className="bg-[#040914] border border-[#1e2942] rounded-xl p-4 text-center">
                   <i className="fas fa-eye text-blue-400 text-2xl mb-2"></i>
-                  <div className="text-sm text-gray-300">Monitored</div>
+                  <div className="text-sm text-slate-400">Monitored</div>
                   <div className="text-lg font-bold text-blue-400">24/7</div>
                 </div>
-                <div className="bg-yellow-500/20 rounded-lg p-4 text-center">
-                  <i className="fas fa-bolt text-yellow-400 text-2xl mb-2"></i>
-                  <div className="text-sm text-gray-300">Response</div>
-                  <div className="text-lg font-bold text-yellow-400">&lt;15min</div>
+                <div className="bg-[#040914] border border-[#1e2942] rounded-xl p-4 text-center">
+                  <i className="fas fa-bolt text-cyan-400 text-2xl mb-2"></i>
+                  <div className="text-sm text-slate-400">Response</div>
+                  <div className="text-lg font-bold text-cyan-400">&lt;15min</div>
                 </div>
-                <div className="bg-purple-500/20 rounded-lg p-4 text-center">
-                  <i className="fas fa-brain text-purple-400 text-2xl mb-2"></i>
-                  <div className="text-sm text-gray-300">AI Powered</div>
-                  <div className="text-lg font-bold text-purple-400">Smart</div>
+                <div className="bg-[#040914] border border-[#1e2942] rounded-xl p-4 text-center">
+                  <i className="fas fa-brain text-blue-400 text-2xl mb-2"></i>
+                  <div className="text-sm text-slate-400">AI Powered</div>
+                  <div className="text-lg font-bold text-blue-400">Smart</div>
                 </div>
               </div>
             </div>

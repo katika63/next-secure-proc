@@ -13,13 +13,13 @@ interface ServiceFeaturesProps {
 
 const ServiceFeatures = ({ features, color }: ServiceFeaturesProps) => {
   return (
-    <section className="py-20 px-6 bg-gray-800/30">
+    <section className="py-20 px-6 bg-[#040914]/60">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Advanced <span className="gradient-text">Features</span>
           </h2>
-          <p className="text-lg text-gray-300 max-w-3xl mx-auto">
+          <p className="text-lg text-slate-400 max-w-3xl mx-auto">
             Our comprehensive feature set ensures complete protection and visibility 
             across your entire digital infrastructure.
           </p>
@@ -29,7 +29,7 @@ const ServiceFeatures = ({ features, color }: ServiceFeaturesProps) => {
           {features.map((feature, index) => (
             <motion.div
               key={feature.title}
-              className="group bg-gray-800/60 backdrop-blur-md border border-gray-700 rounded-xl p-8 hover:border-gray-600 transition-all duration-300"
+              className="group glass-card glass-card-hover rounded-xl p-8 border border-[#1e2942]"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -44,7 +44,7 @@ const ServiceFeatures = ({ features, color }: ServiceFeaturesProps) => {
                   <h3 className="text-xl font-bold mb-3 group-hover:text-white transition-colors">
                     {feature.title}
                   </h3>
-                  <p className="text-gray-300 leading-relaxed">
+                  <p className="text-slate-300 leading-relaxed">
                     {feature.description}
                   </p>
                 </div>

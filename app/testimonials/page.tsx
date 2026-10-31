@@ -243,7 +243,7 @@ export default function TestimonialPage() {
                 Get Free Consultation
               </a>
               <a 
-                href="/our-clients"
+                href="/about/our-clients"
                 className="border border-blue-400 text-blue-400 hover:text-white hover:border-white px-8 py-3 rounded-lg font-medium transition-all duration-300"
               >
                 View Client Stories

@@ -20,7 +20,7 @@ export default function ServiceOverview() {
               </div>
             </div>
             
-            <a href="/contact/" className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
+            <a href="/contact" className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
               Request Vulnerability Assessment
             </a>
           </div>

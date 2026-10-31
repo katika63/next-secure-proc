@@ -113,7 +113,7 @@ export default function CourseCategories() {
         certification: 'Exam Voucher Included',
         price: '$1,599',
         level: 'Certification',
-        levelClass: 'bg-purple-900 text-purple-300'
+        levelClass: 'bg-blue-900 text-blue-300'
       },
       {
         id: 11,
@@ -123,7 +123,7 @@ export default function CourseCategories() {
         certification: 'Exam Voucher Included',
         price: '$1,399',
         level: 'Certification',
-        levelClass: 'bg-purple-900 text-purple-300'
+        levelClass: 'bg-blue-900 text-blue-300'
       },
       {
         id: 12,
@@ -133,7 +133,7 @@ export default function CourseCategories() {
         certification: 'Exam Voucher Included',
         price: '$999',
         level: 'Certification',
-        levelClass: 'bg-purple-900 text-purple-300'
+        levelClass: 'bg-blue-900 text-blue-300'
       }
     ],
     analyst: [

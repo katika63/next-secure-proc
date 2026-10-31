@@ -151,7 +151,8 @@ export default function PrivacyPolicy() {
                   By visiting this page on our website
                 </Link>
               </li>
-              <li>By mail: BTMSecurity, 123 Cyber Lane, Security District, NY 10001, United States</li>
+              <li>By phone: +234 704 598 1315</li>
+              <li>By mail: BTM Security Privacy & Compliance</li>
             </ul>
           </div>
         </div>

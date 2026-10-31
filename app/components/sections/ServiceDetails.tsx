@@ -41,7 +41,7 @@ const ServiceDetails = ({ benefits, process }: ServiceDetailsProps) => {
                   <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                     <i className="fas fa-check text-white text-xs"></i>
                   </div>
-                  <p className="text-gray-300 leading-relaxed">{benefit}</p>
+                  <p className="text-slate-300 leading-relaxed">{benefit}</p>
                 </motion.div>
               ))}
             </div>
@@ -73,7 +73,7 @@ const ServiceDetails = ({ benefits, process }: ServiceDetailsProps) => {
                   </div>
                   <div>
                     <h3 className="text-xl font-bold mb-2">{step.title}</h3>
-                    <p className="text-gray-300 leading-relaxed">{step.description}</p>
+                    <p className="text-slate-300 leading-relaxed">{step.description}</p>
                   </div>
                 </motion.div>
               ))}

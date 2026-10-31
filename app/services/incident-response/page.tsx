@@ -16,7 +16,7 @@ export default function IncidentResponsePage() {
     subtitle: '24/7 Emergency Threat Response',
     description: 'Our Certified Incident Handlers average a 12-minute response time globally, with containment achieved in under 47 minutes (vs. industry average 3.2 hours).',
     icon: 'fas fa-phone-alt',
-    color: 'from-red-500 to-orange-500',
+    color: 'from-blue-600 to-cyan-500',
     features: [
       {
         title: 'Emergency Response',
