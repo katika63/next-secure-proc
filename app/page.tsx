@@ -4,7 +4,6 @@ import ServicesSection from './components/sections/ServicesSection'
 import SecurityDashboardSection from './components/sections/SecurityDashboardSection'
 import CaseStudyHighlight from './components/sections/CaseStudyHighlight'
 import AttackSurfaceSection from './components/sections/AttackSurfaceSection'
-import CookieBanner from './components/sections/CookieBanner'
 import SmartsuppChat from './components/sections/SmartsuppChat'
 
 export default function Home() {
@@ -16,7 +15,6 @@ export default function Home() {
       <SecurityDashboardSection />
       <CaseStudyHighlight />
       <AttackSurfaceSection />
-      <CookieBanner />
       <SmartsuppChat />
     </>
   )

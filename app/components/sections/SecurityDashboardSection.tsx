@@ -52,13 +52,13 @@ const SecurityDashboardSection = () => {
   ]
 
   return (
-    <section aria-labelledby="threat-intel-heading" className="py-16 px-6 bg-transparent relative">
+    <section aria-labelledby="threat-intel-heading" className="py-12 lg:py-16 px-4 sm:px-6 bg-transparent relative">
       <h2 id="threat-intel-heading" className="sr-only">Live Threat Intelligence and Security Posture</h2>
-      <div className="max-w-7xl mx-auto grid lg:grid-cols-12 gap-8">
+      <div className="max-w-7xl mx-auto grid lg:grid-cols-12 gap-6 lg:gap-8">
         
         {/* Left Box: LIVE THREAT INTELLIGENCE (4 Cols) */}
         <motion.div 
-          className="lg:col-span-4 bg-[#070e1e]/90 border border-[#1e2942] rounded-2xl p-6 flex flex-col justify-between shadow-2xl backdrop-blur-xl"
+          className="lg:col-span-4 bg-[#070e1e]/90 border border-[#1e2942] rounded-2xl p-4 sm:p-6 flex flex-col justify-between shadow-2xl backdrop-blur-xl"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -66,7 +66,7 @@ const SecurityDashboardSection = () => {
         >
           <div>
             {/* Header */}
-            <div className="flex items-center justify-between pb-4 border-b border-[#1e2942]">
+            <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-[#1e2942]">
               <h3 className="text-xs font-bold tracking-widest text-slate-300 font-mono uppercase">
                 LIVE THREAT INTELLIGENCE
               </h3>
@@ -112,7 +112,7 @@ const SecurityDashboardSection = () => {
 
         {/* Right Box: SECURITY POSTURE OVERVIEW (8 Cols) */}
         <motion.div 
-          className="lg:col-span-8 bg-[#070e1e]/90 border border-[#1e2942] rounded-2xl p-6 flex flex-col justify-between shadow-2xl backdrop-blur-xl"
+          className="lg:col-span-8 bg-[#070e1e]/90 border border-[#1e2942] rounded-2xl p-4 sm:p-6 flex flex-col justify-between shadow-2xl backdrop-blur-xl"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -120,23 +120,23 @@ const SecurityDashboardSection = () => {
         >
           <div>
             {/* Header */}
-            <div className="pb-4 border-b border-[#1e2942]">
+            <div className="pb-3 sm:pb-4 border-b border-[#1e2942]">
               <h3 className="text-xs font-bold tracking-widest text-slate-300 font-mono uppercase">
                 SECURITY POSTURE OVERVIEW
               </h3>
             </div>
 
             {/* Content Grid */}
-            <div className="grid md:grid-cols-12 gap-6 my-6 items-center">
+            <div className="grid md:grid-cols-12 gap-5 sm:gap-6 my-5 sm:my-6 items-center">
               
               {/* Score Circular Gauge (3 Cols) */}
               <div className="md:col-span-3 flex flex-col items-center justify-center p-4 bg-[#040914] rounded-xl border border-[#162035]">
-                <div className="text-[10px] font-bold text-slate-400 font-mono mb-2 uppercase tracking-wider">
+                <div className="text-[10px] font-bold text-slate-400 font-mono mb-2 uppercase tracking-wider text-center">
                   OVERALL SECURITY SCORE
                 </div>
 
                 <div className="relative w-24 h-24 flex items-center justify-center">
-                  <svg className="w-24 h-24 transform -rotate-90">
+                  <svg className="w-24 h-24 transform -rotate-90" viewBox="0 0 96 96">
                     <circle cx="48" cy="48" r="38" stroke="#1e2942" strokeWidth="6" fill="transparent" />
                     <circle 
                       cx="48" cy="48" r="38" 

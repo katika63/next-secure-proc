@@ -44,20 +44,20 @@ const WhyChooseUsSection = () => {
   ]
 
   return (
-    <section className="py-20 px-6 bg-gray-800/30">
+    <section className="py-12 sm:py-20 px-4 sm:px-6 bg-gray-800/30">
       <div className="max-w-7xl mx-auto">
         {/* Why Choose Us */}
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+        <div className="text-center mb-10 sm:mb-16">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
             Why Choose <span className="gradient-text">BTM Security</span>
           </h2>
-          <p className="text-lg text-gray-300 max-w-3xl mx-auto">
+          <p className="text-base sm:text-lg text-gray-300 max-w-3xl mx-auto">
             We combine cutting-edge technology with human expertise to deliver comprehensive 
             cybersecurity solutions that protect what matters most to your organization.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-12 sm:mb-20">
           {reasons.map((reason, index) => (
             <motion.div
               key={reason.title}
@@ -77,8 +77,8 @@ const WhyChooseUsSection = () => {
         </div>
 
         {/* Stats */}
-        <div className="bg-gray-900/50 rounded-2xl p-8 border border-gray-700">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="bg-gray-900/50 rounded-2xl p-5 sm:p-8 border border-gray-700">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-5 sm:gap-8">
             {stats.map((stat, index) => (
               <motion.div
                 key={stat.label}
@@ -88,7 +88,7 @@ const WhyChooseUsSection = () => {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
               >
-                <div className="text-3xl md:text-4xl font-bold text-blue-400 mb-2">
+                <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-400 mb-2">
                   {stat.number}
                 </div>
                 <div className="text-gray-300 text-sm uppercase tracking-wide">
@@ -107,8 +107,8 @@ const WhyChooseUsSection = () => {
           transition={{ duration: 0.5, delay: 0.3 }}
           viewport={{ once: true }}
         >
-          <h3 className="text-2xl font-bold mb-4">Ready to Strengthen Your Security?</h3>
-          <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
+          <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">Ready to Strengthen Your Security?</h3>
+          <p className="text-sm sm:text-base text-gray-300 mb-6 sm:mb-8 max-w-2xl mx-auto">
             Contact our security experts today to discuss your specific needs and learn how 
             we can help protect your organization from cyber threats.
           </p>

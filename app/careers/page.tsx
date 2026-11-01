@@ -165,18 +165,18 @@ export default function CareersPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative py-20 px-6 bg-transparent text-white">
+      <section className="relative py-12 sm:py-20 px-4 sm:px-6 bg-transparent text-white">
         <div className="max-w-7xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-4 sm:mb-6">
               Join Our <span className="gradient-text">Security Team</span>
             </h1>
             
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8 leading-relaxed">
+            <p className="text-base sm:text-xl text-gray-300 max-w-3xl mx-auto mb-6 sm:mb-8 leading-relaxed">
               Build your cybersecurity career with a team of experts dedicated to protecting 
               organizations from evolving cyber threats.
             </p>
@@ -200,9 +200,9 @@ export default function CareersPage() {
       </section>
 
       {/* Why Join Us Section */}
-      <section className="py-16 px-6 bg-gray-800/30">
+      <section className="py-10 sm:py-16 px-4 sm:px-6 bg-gray-800/30">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center gradient-text">Why Join BTMSecurity?</h2>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-8 sm:mb-12 text-center gradient-text">Why Join BTMSecurity?</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="p-6 rounded-lg bg-gray-800/60 backdrop-blur-md text-center">
               <div className="w-16 h-16 mx-auto mb-4 bg-blue-600/20 rounded-full flex items-center justify-center">
@@ -230,13 +230,13 @@ export default function CareersPage() {
       </section>
 
       {/* Open Positions */}
-      <section className="py-20 px-6">
+      <section className="py-12 sm:py-20 px-4 sm:px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          <div className="text-center mb-10 sm:mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
               Open <span className="gradient-text">Positions</span>
             </h2>
-            <p className="text-lg text-gray-300 max-w-3xl mx-auto">
+            <p className="text-base sm:text-lg text-gray-300 max-w-3xl mx-auto">
               Explore exciting career opportunities in cybersecurity and join our mission 
               to protect organizations worldwide.
             </p>
@@ -246,7 +246,7 @@ export default function CareersPage() {
             {positions.map((position, index) => (
               <motion.div
                 key={position.title}
-                className="bg-gray-800/60 backdrop-blur-md border border-gray-700 rounded-xl p-8 hover:border-gray-600 transition-all duration-300"
+                className="bg-gray-800/60 backdrop-blur-md border border-gray-700 rounded-xl p-5 sm:p-8 hover:border-gray-600 transition-all duration-300"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -306,13 +306,13 @@ export default function CareersPage() {
       </section>
 
       {/* Benefits */}
-      <section className="py-20 px-6 bg-gray-800/30">
+      <section className="py-12 sm:py-20 px-4 sm:px-6 bg-gray-800/30">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          <div className="text-center mb-10 sm:mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
               Why Work <span className="gradient-text">With Us</span>
             </h2>
-            <p className="text-lg text-gray-300 max-w-3xl mx-auto">
+            <p className="text-base sm:text-lg text-gray-300 max-w-3xl mx-auto">
               We offer competitive benefits and a supportive environment where you can grow 
               your cybersecurity career.
             </p>
@@ -340,9 +340,9 @@ export default function CareersPage() {
       </section>
 
       {/* Hiring Process */}
-      <section className="py-16 px-6 bg-gray-800/60">
+      <section className="py-10 sm:py-16 px-4 sm:px-6 bg-gray-800/60">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl font-bold mb-12 text-center gradient-text">Our Hiring Process</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold mb-8 sm:mb-12 text-center gradient-text">Our Hiring Process</h2>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {hiringProcess.map((process, index) => (
               <motion.div
@@ -365,9 +365,9 @@ export default function CareersPage() {
       </section>
 
       {/* Application Form */}
-      <section id="application-form" className="py-16 px-6">
-        <div className="max-w-3xl mx-auto bg-gray-800/60 backdrop-blur-md border border-gray-700 rounded-xl p-8">
-          <h2 className="text-3xl font-bold mb-6 text-center gradient-text">Apply Now</h2>
+      <section id="application-form" className="py-10 sm:py-16 px-4 sm:px-6">
+        <div className="max-w-3xl mx-auto bg-gray-800/60 backdrop-blur-md border border-gray-700 rounded-xl p-5 sm:p-8">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-center gradient-text">Apply Now</h2>
           
           <form onSubmit={handleSubmit} className="space-y-6">
             {submitMessage && (
@@ -485,7 +485,7 @@ export default function CareersPage() {
       </section>
 
       {/* Application CTA */}
-      <section className="py-20 px-6">
+      <section className="py-12 sm:py-20 px-4 sm:px-6">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -493,11 +493,11 @@ export default function CareersPage() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl font-bold mb-4">
+            <h2 className="text-2xl sm:text-3xl font-bold mb-4">
               Don&apos;t See the Right Position?
             </h2>
             
-            <p className="text-lg text-gray-300 mb-8">
+            <p className="text-base sm:text-lg text-gray-300 mb-6 sm:mb-8">
               We&apos;re always looking for talented cybersecurity professionals. 
               Send us your resume and let us know how you&apos;d like to contribute to our mission.
             </p>

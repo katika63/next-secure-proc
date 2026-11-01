@@ -168,19 +168,19 @@ function FaqRow({ faq, index }: { faq: FaqItem; index: number }) {
 
 export default function PricingContent() {
   return (
-    <div className="relative py-12 md:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-16">
+    <div className="relative py-8 sm:py-12 md:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-12 sm:space-y-16">
 
       {/* ── Hero ──────────────────────────────────────────────────────────── */}
-      <section className="text-center relative pt-4 pb-2">
+      <section className="text-center relative pt-2 sm:pt-4 pb-2">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[30rem] h-[30rem] bg-blue-600/10 rounded-full blur-3xl pointer-events-none -z-10" />
 
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#0a1124] border border-blue-500/40 text-blue-400 text-xs font-mono tracking-wider uppercase mb-6 shadow-sm"
+          className="inline-flex flex-wrap items-center justify-center gap-2 px-3 sm:px-4 py-1.5 rounded-full bg-[#0a1124] border border-blue-500/40 text-blue-400 text-[10px] sm:text-xs font-mono tracking-wider uppercase mb-5 sm:mb-6 shadow-sm"
         >
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
           <span>NIGERIA-BASED · TRANSPARENT CYBERSECURITY PRICING</span>
         </motion.div>
 
@@ -188,7 +188,7 @@ export default function PricingContent() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1 }}
-          className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white mb-6"
+          className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white mb-4 sm:mb-6"
         >
           Standard &amp; <span className="gradient-text-blue">Enterprise Plans</span>
         </motion.h1>
@@ -197,7 +197,7 @@ export default function PricingContent() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.2 }}
-          className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed"
+          className="text-sm sm:text-lg md:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed"
         >
           Three tiers built for African organizations — from startups needing a baseline scan to
           enterprises requiring continuous, always-on security operations.
@@ -208,11 +208,11 @@ export default function PricingContent() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="mt-8 flex justify-center"
+          className="mt-6 sm:mt-8 flex justify-center"
         >
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm shadow-lg shadow-blue-600/30 transition-all"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm shadow-lg shadow-blue-600/30 transition-all text-center"
           >
             <i className="fas fa-calendar-check" />
             <span>Book a 15-Minute Scoping Call</span>
@@ -388,42 +388,42 @@ export default function PricingContent() {
       </section>
 
       {/* ── Bottom CTA ─────────────────────────────────────────────────────── */}
-      <section className="rounded-3xl p-8 sm:p-12 bg-gradient-to-br from-[#0a1535] via-[#091129] to-[#040915] border border-blue-500/40 text-center relative overflow-hidden shadow-2xl">
+      <section className="rounded-2xl sm:rounded-3xl p-6 sm:p-12 bg-gradient-to-br from-[#0a1535] via-[#091129] to-[#040915] border border-blue-500/40 text-center relative overflow-hidden shadow-2xl">
         <div className="absolute top-0 right-0 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="relative z-10 max-w-3xl mx-auto space-y-6">
+        <div className="relative z-10 max-w-3xl mx-auto space-y-5 sm:space-y-6">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-mono">
             <span>CUSTOM SCOPE &amp; ENTERPRISE CONTRACTS</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
+          <h2 className="text-2xl sm:text-4xl font-extrabold text-white">
             Need a Custom Cyber Defense Package?
           </h2>
 
-          <p className="text-slate-300 text-base sm:text-lg leading-relaxed">
+          <p className="text-slate-300 text-sm sm:text-lg leading-relaxed">
             Speak with a BTM Security engineer to evaluate your asset perimeter, compliance obligations,
             and receive a tailored proposal within 1 business day.
           </p>
 
-          <div className="pt-2 flex flex-wrap justify-center gap-4">
+          <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4">
             <Link
               id="cta-pricing-scoping"
               href="/contact"
-              className="px-8 py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-semibold text-sm shadow-lg shadow-blue-600/30 hover:shadow-blue-500/50 transition-all flex items-center gap-2"
+              className="w-full sm:w-auto px-6 sm:px-8 py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-semibold text-sm shadow-lg shadow-blue-600/30 hover:shadow-blue-500/50 transition-all flex items-center justify-center gap-2 text-center"
             >
               <i className="fas fa-calendar-check text-xs" />
-              <span>Book a 15-Minute Scoping Call</span>
+              <span>Book Scoping Call</span>
             </Link>
             <Link
               id="cta-pricing-contact"
               href="/contact"
-              className="px-8 py-3.5 rounded-xl bg-[#0a1124] border border-[#1e2942] hover:border-blue-500/60 text-slate-200 hover:text-white font-semibold text-sm transition-all"
+              className="w-full sm:w-auto px-6 sm:px-8 py-3.5 rounded-xl bg-[#0a1124] border border-[#1e2942] hover:border-blue-500/60 text-slate-200 hover:text-white font-semibold text-sm transition-all text-center"
             >
               Request Custom Proposal
             </Link>
             <Link
               id="cta-pricing-operations"
               href="/operations"
-              className="px-8 py-3.5 rounded-xl bg-[#0a1124] border border-[#1e2942] hover:border-blue-500/60 text-slate-200 hover:text-white font-semibold text-sm transition-all"
+              className="w-full sm:w-auto px-6 sm:px-8 py-3.5 rounded-xl bg-[#0a1124] border border-[#1e2942] hover:border-blue-500/60 text-slate-200 hover:text-white font-semibold text-sm transition-all text-center"
             >
               View Areas of Operation
             </Link>

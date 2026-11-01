@@ -21,18 +21,18 @@ export default async function BlogPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative py-20 px-6 bg-transparent text-white">
+      <section className="relative py-12 sm:py-20 px-4 sm:px-6 bg-transparent text-white">
         <div className="max-w-7xl mx-auto text-center">
           <div className="inline-block text-xs font-bold tracking-widest text-blue-400 uppercase font-mono bg-blue-950/40 border border-blue-500/20 px-3 py-1 rounded-full mb-4">
             CYBERSECURITY JOURNAL
           </div>
-          <h1 className="text-4xl md:text-6xl font-extrabold mb-6 tracking-tight">
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold mb-4 sm:mb-6 tracking-tight">
             Cybersecurity{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-500 to-cyan-400">
               Insights
             </span>
           </h1>
-          <p className="text-lg text-slate-300 max-w-3xl mx-auto mb-8 leading-relaxed">
+          <p className="text-base sm:text-lg text-slate-300 max-w-3xl mx-auto mb-6 sm:mb-8 leading-relaxed">
             Stay informed with the latest cybersecurity trends, threat analysis, and expert insights
             from our security professionals.
           </p>
@@ -40,7 +40,7 @@ export default async function BlogPage() {
       </section>
 
       {/* Blog Posts Grid */}
-      <section className="py-12 px-6 bg-transparent">
+      <section className="py-8 sm:py-12 px-4 sm:px-6 bg-transparent">
         <div className="max-w-7xl mx-auto">
           {blogPosts.length === 0 ? (
             // Empty state — shown until first post is published in Sanity

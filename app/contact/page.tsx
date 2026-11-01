@@ -73,7 +73,7 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen text-gray-100 relative z-10">
       {/* Hero Header */}
-      <section className="py-20 px-6">
+      <section className="py-12 sm:py-20 px-4 sm:px-6">
         <div className="max-w-7xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -86,10 +86,10 @@ export default function ContactPage() {
               <span>We respond within 1 business day</span>
             </div>
 
-            <h1 className="text-4xl md:text-6xl font-bold leading-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold leading-tight">
               <span className="gradient-text">Secure Your Future</span>
             </h1>
-            <p className="text-xl text-gray-300 max-w-4xl mx-auto">
+            <p className="text-base sm:text-xl text-gray-300 max-w-4xl mx-auto">
               Our cybersecurity experts are ready to evaluate your threat landscape, scope security testing, and build a custom defense strategy.
             </p>
 
@@ -119,21 +119,21 @@ export default function ContactPage() {
       </section>
 
       {/* Contact Grid */}
-      <section className="py-12 px-6" id="contact-form">
+      <section className="py-8 sm:py-12 px-4 sm:px-6" id="contact-form">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12">
             
             {/* Contact Form */}
             <motion.div 
-              className="bg-gray-800/60 backdrop-blur-md border border-gray-700 rounded-xl p-8"
+              className="bg-gray-800/60 backdrop-blur-md border border-gray-700 rounded-xl p-6 sm:p-8"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
             >
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold gradient-text">Send a Message</h2>
-                <span className="text-xs font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-2.5 py-1 rounded-full">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-2">
+                <h2 className="text-xl sm:text-2xl font-bold gradient-text">Send a Message</h2>
+                <span className="text-xs font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-2.5 py-1 rounded-full self-start sm:self-auto">
                   Response SLA: 1 Business Day
                 </span>
               </div>
@@ -343,7 +343,7 @@ export default function ContactPage() {
 
       {/* Security Assurance */}
       <motion.section 
-        className="py-16 px-6"
+        className="py-12 sm:py-16 px-4 sm:px-6"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}

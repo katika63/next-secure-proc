@@ -105,6 +105,19 @@ const Footer = () => {
               <li><Link href="/vulnerability-disclosure" className="hover:text-blue-400 transition-colors">Vulnerability Disclosure</Link></li>
               <li><Link href="/terms" className="hover:text-blue-400 transition-colors">Terms of Service</Link></li>
               <li><Link href="/cookie-policy" className="hover:text-blue-400 transition-colors">Cookie Policy</Link></li>
+              <li>
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (typeof window !== 'undefined') {
+                      window.dispatchEvent(new CustomEvent('openCookiePreferences'))
+                    }
+                  }}
+                  className="hover:text-blue-400 transition-colors text-left"
+                >
+                  Cookie Preferences
+                </button>
+              </li>
             </ul>
           </div>
 
@@ -144,6 +157,18 @@ const Footer = () => {
             <Link href="/operations" className="hover:text-slate-300 transition-colors">Areas of Operation</Link>
             <Link href="/privacy-policy" className="hover:text-slate-300 transition-colors">Privacy Policy</Link>
             <Link href="/terms" className="hover:text-slate-300 transition-colors">Terms of Service</Link>
+            <Link href="/cookie-policy" className="hover:text-slate-300 transition-colors">Cookie Policy</Link>
+            <button
+              type="button"
+              onClick={() => {
+                if (typeof window !== 'undefined') {
+                  window.dispatchEvent(new CustomEvent('openCookiePreferences'))
+                }
+              }}
+              className="hover:text-slate-300 transition-colors cursor-pointer"
+            >
+              Cookie Settings
+            </button>
             <Link href="/vulnerability-disclosure" className="hover:text-slate-300 transition-colors">Vulnerability Disclosure</Link>
             <a href="/security.txt" className="hover:text-slate-300 transition-colors font-mono">security.txt</a>
           </div>

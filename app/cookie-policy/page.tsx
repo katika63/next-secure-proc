@@ -1,6 +1,6 @@
-// app/cookie-policy/page.js
 import { Metadata } from 'next'
 import Link from 'next/link'
+import CookieSettingsButton from '../components/ui/CookieSettingsButton'
 
 export const metadata: Metadata = {
   title: 'Cookie Policy | BTMSecurity',
@@ -13,6 +13,15 @@ export default function CookiePolicy() {
       <h1 className="text-3xl font-bold mb-6 text-white">Cookie Policy</h1>
 
       <p className="mb-4">This Cookie Policy explains how we use cookies and similar technologies to provide, protect, and improve our services. By using our website, you agree to the use of cookies as described in this policy.</p>
+
+      {/* Quick Action Box */}
+      <div className="my-6 p-4 rounded-xl bg-[#070f24] border border-[#1e2e50] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-lg">
+        <div>
+          <div className="font-semibold text-white text-sm">Customise Your Consent</div>
+          <div className="text-xs text-slate-400 mt-0.5">You can enable or disable optional analytics and telemetry cookies at any time.</div>
+        </div>
+        <CookieSettingsButton />
+      </div>
 
       <h2 className="text-2xl font-semibold mt-8 mb-3">1. What are cookies?</h2>
       <p className="mb-4">Cookies are small text files that are stored on your device when you visit a website. They help us remember your preferences, understand how you use our site, and improve your overall experience.</p>
@@ -29,7 +38,10 @@ export default function CookiePolicy() {
       <p className="mb-4">Some cookies are placed by third parties that provide services on our behalf (e.g., analytics providers, advertising networks). We do not control these cookies directly.</p>
 
       <h2 className="text-2xl font-semibold mt-8 mb-3">4. How to control cookies</h2>
-      <p className="mb-4">You can manage cookies through your browser settings. Most browsers allow you to block or delete cookies, but please note that disabling certain cookies may affect the functionality of our site.</p>
+      <p className="mb-4">You can manage cookies directly using our portal preferences or through your browser settings. Most browsers allow you to block or delete cookies, but please note that disabling certain cookies may affect the functionality of our site.</p>
+      <div className="mb-6">
+        <CookieSettingsButton />
+      </div>
       <ul className="list-disc list-inside space-y-1">
         <li>
           <Link 

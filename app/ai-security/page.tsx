@@ -401,6 +401,14 @@ export default function DynamicSentinelAIPage() {
 
         {/* Desktop Nav */}
         <nav className="hidden lg:flex items-center space-x-5 text-xs font-medium text-slate-300 font-mono">
+          <Link
+            href="/"
+            className="flex items-center gap-1.5 text-slate-400 hover:text-white transition-colors"
+            title="Return to BTM Security Home"
+          >
+            <i className="fas fa-home text-xs text-blue-400" />
+            <span>Home</span>
+          </Link>
           {navItems.map(item => (
             <button key={item.name} onClick={() => setActiveTab(item.name)} className={`hover:text-white transition-colors ${activeTab === item.name ? 'text-blue-400 font-bold' : ''}`}>
               {item.name === 'Research Lab' ? 'Research' : item.name === 'Threat Intelligence' ? 'Threat Intel' : item.name}
@@ -409,6 +417,14 @@ export default function DynamicSentinelAIPage() {
         </nav>
 
         <div className="flex items-center space-x-2 sm:space-x-4">
+          <Link
+            href="/"
+            className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg bg-blue-600/10 hover:bg-blue-600/25 border border-blue-500/30 hover:border-blue-400/60 text-blue-300 hover:text-white text-xs font-semibold font-mono transition-all duration-200 shadow-sm group shrink-0"
+            title="Return to BTM Security Home"
+          >
+            <i className="fas fa-home text-blue-400 group-hover:scale-110 transition-transform text-xs" />
+            <span>Home</span>
+          </Link>
           <div className="hidden md:flex items-center space-x-2 text-[11px] font-mono text-slate-400 bg-[#09152b] border border-[#14284d] px-3 py-1 rounded-lg">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
             <span>IP: {visitorIp}</span>
@@ -423,7 +439,7 @@ export default function DynamicSentinelAIPage() {
           <button
             key={item.name}
             onClick={() => { setActiveTab(item.name); setTabResult('') }}
-            className={`shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+            className={`shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium transition-all ${
               activeTab === item.name
                 ? 'bg-[#0c1f42] text-white border border-[#1e3b75] shadow-md font-semibold'
                 : 'text-slate-400 hover:text-slate-200 bg-[#061126] border border-[#0f1d38]'
@@ -456,6 +472,18 @@ export default function DynamicSentinelAIPage() {
                 </button>
               ))}
             </nav>
+
+            <div className="pt-3 mt-3 border-t border-[#0f1d38]">
+              <Link
+                href="/"
+                className="w-full flex items-center space-x-2.5 px-3 py-2 rounded-lg text-xs font-medium text-slate-400 hover:text-white hover:bg-blue-950/30 border border-transparent hover:border-blue-900/40 transition-all group"
+                title="Return to BTM Security Home"
+              >
+                <i className="fas fa-arrow-left text-xs text-blue-400 group-hover:-translate-x-0.5 transition-transform" />
+                <i className="fas fa-home text-xs text-blue-400 transition-colors" />
+                <span className="font-mono text-slate-300 group-hover:text-white">Back to Home</span>
+              </Link>
+            </div>
           </div>
 
           <div className="bg-[#050c1e]/90 border border-[#0f1d38] rounded-xl p-4 shadow-xl">
@@ -552,7 +580,7 @@ export default function DynamicSentinelAIPage() {
                   onChange={(e) => setInputQuery(e.target.value)}
                   placeholder="Ask Sentinel AI..."
                   disabled={loading}
-                  className="w-full pl-3 sm:pl-4 pr-12 sm:pr-14 py-2.5 sm:py-3 bg-[#030816] border border-[#122244] focus:border-blue-500 rounded-xl text-xs sm:text-sm text-white placeholder-slate-500 outline-none transition-colors"
+                  className="w-full pl-3 sm:pl-4 pr-12 sm:pr-14 py-2.5 sm:py-3 bg-[#030816] border border-[#122244] focus:border-blue-500 rounded-xl text-base sm:text-sm text-white placeholder-slate-500 outline-none transition-colors"
                 />
                 <button
                   type="submit"

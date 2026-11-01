@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 export default function CaseStudyHighlight() {
   return (
-    <section aria-labelledby="case-study-heading" className="py-20 px-6 bg-transparent relative overflow-hidden">
+    <section aria-labelledby="case-study-heading" className="py-12 lg:py-20 px-4 sm:px-6 bg-transparent relative overflow-hidden">
       {/* Background glow effects */}
       <div className="absolute top-1/2 right-10 w-[450px] h-[450px] bg-blue-600/10 rounded-full blur-[130px] pointer-events-none -translate-y-1/2" />
       <div className="absolute bottom-0 left-10 w-[350px] h-[350px] bg-cyan-500/10 rounded-full blur-[110px] pointer-events-none" />
@@ -13,17 +13,17 @@ export default function CaseStudyHighlight() {
       <div className="max-w-7xl mx-auto relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
+        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14 space-y-3">
           <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-blue-950/50 border border-blue-500/30">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
             <span className="text-xs font-mono font-bold tracking-widest text-blue-400 uppercase">
               PROVEN RESULTS IN PRODUCTION
             </span>
           </div>
-          <h2 id="case-study-heading" className="text-3xl lg:text-4xl font-extrabold text-white tracking-tight">
-            Client Success & Real-World Impact
+          <h2 id="case-study-heading" className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight">
+            Client Success &amp; Real-World Impact
           </h2>
-          <p className="text-slate-400 text-sm lg:text-base">
+          <p className="text-slate-400 text-xs sm:text-sm lg:text-base">
             See how BTM Security delivers rigorous offensive assessments and protective defense for African and global enterprises.
           </p>
         </div>
@@ -34,7 +34,7 @@ export default function CaseStudyHighlight() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="bg-gradient-to-b from-[#0a1329]/95 to-[#040815]/95 border border-[#1e2942] hover:border-blue-500/50 rounded-2xl p-8 lg:p-12 shadow-2xl backdrop-blur-xl relative overflow-hidden"
+          className="bg-gradient-to-b from-[#0a1329]/95 to-[#040815]/95 border border-[#1e2942] hover:border-blue-500/50 rounded-2xl p-5 sm:p-8 lg:p-12 shadow-2xl backdrop-blur-xl relative overflow-hidden"
         >
           {/* Card Top Banner */}
           <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-[#1e2942]/70">
@@ -154,39 +154,39 @@ export default function CaseStudyHighlight() {
           <div className="pt-6 flex flex-col lg:flex-row items-center justify-between gap-6">
             
             {/* Quick Metrics */}
-            <div className="grid grid-cols-3 gap-6 w-full lg:w-auto text-center lg:text-left">
-              <div>
-                <div className="text-2xl lg:text-3xl font-extrabold text-blue-400 font-mono">14</div>
-                <div className="text-[11px] text-slate-400 font-sans">Flaws Remediated</div>
+            <div className="grid grid-cols-3 gap-2 sm:gap-6 w-full lg:w-auto text-center lg:text-left">
+              <div className="p-1">
+                <div className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-blue-400 font-mono">14</div>
+                <div className="text-[10px] sm:text-[11px] text-slate-400 font-sans leading-tight mt-0.5">Flaws Remediated</div>
               </div>
-              <div className="border-x border-[#1e2942] px-6">
-                <div className="text-2xl lg:text-3xl font-extrabold text-emerald-400 font-mono">100%</div>
-                <div className="text-[11px] text-slate-400 font-sans">Pass on Retest</div>
+              <div className="border-x border-[#1e2942] px-2 sm:px-6 p-1">
+                <div className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-emerald-400 font-mono">100%</div>
+                <div className="text-[10px] sm:text-[11px] text-slate-400 font-sans leading-tight mt-0.5">Pass on Retest</div>
               </div>
-              <div>
-                <div className="text-2xl lg:text-3xl font-extrabold text-cyan-400 font-mono">0</div>
-                <div className="text-[11px] text-slate-400 font-sans">Production Breaches</div>
+              <div className="p-1">
+                <div className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-cyan-400 font-mono">0</div>
+                <div className="text-[10px] sm:text-[11px] text-slate-400 font-sans leading-tight mt-0.5">Prod Breaches</div>
               </div>
             </div>
 
             {/* CTAs */}
-            <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto justify-center lg:justify-end">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3 w-full lg:w-auto justify-center lg:justify-end">
               <Link
                 href="/about/our-clients"
-                className="inline-flex items-center gap-2 bg-[#0a152e] hover:bg-[#122247] border border-[#1e3466] hover:border-blue-400 text-slate-200 hover:text-white px-5 py-2.5 rounded-xl text-xs md:text-sm font-semibold transition-all duration-200"
+                className="inline-flex items-center justify-center gap-2 bg-[#0a152e] hover:bg-[#122247] border border-[#1e3466] hover:border-blue-400 text-slate-200 hover:text-white px-5 py-3 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 text-center"
               >
                 <span>View Success Stories</span>
-                <svg className="w-4 h-4 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-4 h-4 text-blue-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
               </Link>
 
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white px-5 py-2.5 rounded-xl text-xs md:text-sm font-semibold shadow-md shadow-blue-600/30 transition-all duration-200"
+                className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white px-5 py-3 rounded-xl text-xs sm:text-sm font-semibold shadow-md shadow-blue-600/30 transition-all duration-200 text-center"
               >
-                <span>Book a 15-Minute Scoping Call</span>
-                <i className="fas fa-phone-volume text-xs" aria-hidden="true" />
+                <span>Book Scoping Call</span>
+                <i className="fas fa-phone-volume text-xs shrink-0" aria-hidden="true" />
               </Link>
             </div>
 

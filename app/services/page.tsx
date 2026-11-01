@@ -22,15 +22,15 @@ export default function ServicesPage() {
         <AllServicesSection />
         
         {/* Vulnerability Management Section */}
-        <section id="vulnerability" className="py-20 px-6">
+        <section id="vulnerability" className="py-12 sm:py-20 px-4 sm:px-6">
           <div className="max-w-7xl mx-auto">
-            <div className="flex flex-col lg:flex-row items-center gap-12">
+            <div className="flex flex-col lg:flex-row items-center gap-8 sm:gap-12">
               <div className="lg:w-1/2">
-                <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6">
                   <span className="gradient-text">Vulnerability Management</span><br/>
                   Proactive Risk Reduction
                 </h2>
-                <p className="text-lg text-gray-300 mb-8">
+                <p className="text-base sm:text-lg text-gray-300 mb-6 sm:mb-8">
                   Our comprehensive vulnerability management program provides continuous monitoring and prioritization of security weaknesses across your environment.
                 </p>
                 <div className="space-y-8">
@@ -110,13 +110,13 @@ export default function ServicesPage() {
         </section>
         
         {/* Additional Services Section */}
-        <section className="py-20 px-6">
+        <section className="py-12 sm:py-20 px-4 sm:px-6">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
                 <span className="gradient-text">Comprehensive Security</span> Solutions
               </h2>
-              <p className="text-lg text-gray-300 max-w-3xl mx-auto">
+              <p className="text-base sm:text-lg text-gray-300 max-w-3xl mx-auto">
                 Beyond our core services, we offer specialized security solutions to address your unique challenges.
               </p>
             </div>
@@ -176,10 +176,10 @@ export default function ServicesPage() {
         <WhyChooseUsSection />
         
         {/* CTA Section */}
-        <section className="py-20 px-6">
-          <div className="max-w-4xl mx-auto bg-gradient-to-r from-blue-900 to-blue-800 rounded-2xl p-8 md:p-12 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Strengthen Your Security Posture?</h2>
-            <p className="text-xl text-blue-200 mb-8">
+        <section className="py-12 sm:py-20 px-4 sm:px-6">
+          <div className="max-w-4xl mx-auto bg-gradient-to-r from-blue-900 to-blue-800 rounded-2xl p-6 sm:p-8 md:p-12 text-center">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6">Ready to Strengthen Your Security Posture?</h2>
+            <p className="text-base sm:text-xl text-blue-200 mb-6 sm:mb-8">
               Contact our security experts to discuss how we can protect your organization from evolving cyber threats.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
