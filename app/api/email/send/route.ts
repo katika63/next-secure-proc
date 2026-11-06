@@ -40,8 +40,8 @@ const FROM_MAP: Record<string, string> = {
 // Explicit Reply-To Mapping
 // ---------------------------------------------------------------------------
 const SENDER_MAP: Record<string, string> = {
-  "security@research.btmsec.com":   "security@btmsec.com",
-  "disclosure@research.btmsec.com": "disclosure@btmsec.com",
+  "security@research.btmsec.com":   "security.research@btmsec.com",
+  "disclosure@research.btmsec.com": "disclosure.research@btmsec.com",
   "advisory@research.btmsec.com":   "advisory@btmsec.com",
 }
 

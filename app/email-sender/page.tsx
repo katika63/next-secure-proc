@@ -42,7 +42,12 @@ export default function EmailSenderPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [status, setStatus] = useState<SendStatus>({ type: 'idle', message: '' })
 
-  const derivedReplyTo = formData.from.replace('@research.btmsec.com', '@btmsec.com')
+  const REPLY_TO_MAP: Record<string, string> = {
+    'security@research.btmsec.com':   'security.research@btmsec.com',
+    'disclosure@research.btmsec.com': 'disclosure.research@btmsec.com',
+    'advisory@research.btmsec.com':   'advisory@btmsec.com',
+  }
+  const derivedReplyTo = REPLY_TO_MAP[formData.from] ?? ''
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -263,7 +268,7 @@ export default function EmailSenderPage() {
               </option>
             </select>
             <p className="text-[11px] text-slate-500 font-mono mt-1">
-              Sends from research.btmsec.com. Replies go to the matching @btmsec.com Zoho inbox.
+              Sends from research.btmsec.com. Replies route to security.research@ or disclosure.research@btmsec.com.
             </p>
           </div>
 
