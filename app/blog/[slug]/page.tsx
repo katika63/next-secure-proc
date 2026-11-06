@@ -81,12 +81,10 @@ export default async function BlogPostPage(
                     <span>{post.readTime}</span>
                   </>
                 )}
-                {post.author?.name && (
-                  <>
-                    <span className="text-slate-600">•</span>
-                    <span>By <span className="text-blue-400">{post.author.name}</span></span>
-                  </>
-                )}
+                <>
+                  <span className="text-slate-600">•</span>
+                  <span>By <span className="text-blue-400">BTM Security</span></span>
+                </>
               </div>
             </header>
 
@@ -110,46 +108,6 @@ export default async function BlogPostPage(
               </div>
             )}
 
-            {/* Author Bio */}
-            {post.author && (
-              <footer className="mt-14 border-t border-[#1e2942] pt-10">
-                <h3 className="text-lg font-bold text-white mb-5">About the Author</h3>
-                <div className="flex items-start gap-5">
-                  {post.author.photoUrl ? (
-                    <Image
-                      src={post.author.photoUrl}
-                      alt={post.author.name}
-                      width={72}
-                      height={72}
-                      className="rounded-full object-cover border border-[#1e2942] shrink-0"
-                    />
-                  ) : post.author.photo ? (
-                    <Image
-                      src={urlFor(post.author.photo).width(72).height(72).url()}
-                      alt={post.author.name}
-                      width={72}
-                      height={72}
-                      className="rounded-full object-cover border border-[#1e2942] shrink-0"
-                    />
-                  ) : (
-                    <div className="w-16 h-16 rounded-full bg-blue-950 border border-blue-500/30 flex items-center justify-center shrink-0">
-                      <span className="text-blue-400 text-xl font-bold">
-                        {post.author.name.charAt(0)}
-                      </span>
-                    </div>
-                  )}
-                  <div>
-                    <h4 className="font-bold text-white">{post.author.name}</h4>
-                    {post.author.title && (
-                      <p className="text-blue-400 text-sm mb-2">{post.author.title}</p>
-                    )}
-                    {post.author.bio && (
-                      <p className="text-gray-300 text-sm leading-relaxed">{post.author.bio}</p>
-                    )}
-                  </div>
-                </div>
-              </footer>
-            )}
           </article>
         </div>
       </section>
