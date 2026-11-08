@@ -27,26 +27,8 @@ const Footer = () => {
               Nigeria-based cybersecurity company serving African enterprises and remote clients worldwide — penetration testing, vulnerability management, and continuous threat monitoring.
             </p>
 
-            {/* Social & Contact Icons */}
+            {/* Contact Icons */}
             <div className="flex items-center space-x-3 pt-2">
-              <a
-                href="https://www.linkedin.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="LinkedIn"
-                className="w-8 h-8 rounded-lg bg-[#0a1124] border border-[#1e2942] hover:border-blue-500 flex items-center justify-center text-slate-400 hover:text-blue-400 transition-colors text-xs"
-              >
-                <i className="fab fa-linkedin-in" />
-              </a>
-              <a
-                href="https://x.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="X (formerly Twitter)"
-                className="w-8 h-8 rounded-lg bg-[#0a1124] border border-[#1e2942] hover:border-blue-500 flex items-center justify-center text-slate-400 hover:text-blue-400 transition-colors text-xs"
-              >
-                <i className="fab fa-x-twitter" />
-              </a>
               <a
                 href="tel:+2347045981315"
                 aria-label="Phone: +234 704 598 1315"
