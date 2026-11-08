@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import ClientLogoStrip from '../../components/sections/ClientLogoStrip'
+import ClientLogoStrip from '@/app/components/sections/ClientLogoStrip'
 
 export default function OurClientsPage() {
   const clientCategories = [

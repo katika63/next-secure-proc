@@ -1,10 +1,10 @@
 // app/about/our-mission/page.tsx
 import { Metadata } from 'next'
-import MissionHero from '../../components/sections/MissionHero'
-import MissionCards from '../../components/sections/MissionCards'
-import EducationSection from '../../components/sections/EducationSection'
-import CommunityImpact from '../../components/sections/CommunityImpact'
-import ClientLogoStrip from '../../components/sections/ClientLogoStrip'
+import MissionHero from '@/app/components/sections/MissionHero'
+import MissionCards from '@/app/components/sections/MissionCards'
+import EducationSection from '@/app/components/sections/EducationSection'
+import CommunityImpact from '@/app/components/sections/CommunityImpact'
+import ClientLogoStrip from '@/app/components/sections/ClientLogoStrip'
 
 export const metadata: Metadata = {
   title: 'Our Mission | BTM Security',
