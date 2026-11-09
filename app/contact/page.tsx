@@ -292,8 +292,8 @@ export default function ContactPage() {
                     <i className="fas fa-shield-virus text-blue-400 mt-1 mr-4"></i>
                     <div>
                       <p className="font-medium text-white">Vulnerability Reporting</p>
-                      <a href="mailto:security@btmsec.com" className="text-blue-400 hover:underline text-sm font-mono">
-                        security@btmsec.com
+                      <a href="mailto:security.research@btmsec.com" className="text-blue-400 hover:underline text-sm font-mono">
+                        security.research@btmsec.com
                       </a>
                       <p className="text-xs text-gray-400 mt-0.5">
                         See our{' '}

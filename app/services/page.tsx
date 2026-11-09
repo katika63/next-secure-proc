@@ -109,6 +109,67 @@ export default function ServicesPage() {
           </div>
         </section>
         
+        {/* Sample Lab Pentest Report Showcase Card */}
+        <section className="py-6 px-4 sm:px-6">
+          <div className="max-w-7xl mx-auto">
+            <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#070e20] via-[#0a1530] to-[#070e20] border border-[#1e2e50] p-6 sm:p-8 md:p-10 shadow-2xl backdrop-blur-xl">
+              <div className="absolute top-0 right-1/4 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
+              
+              <div className="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+                <div className="max-w-2xl space-y-2.5">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-950/60 border border-blue-500/30 text-blue-400 text-xs font-mono">
+                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+                    <span>PORTFOLIO ARTIFACT • LAB ASSESSMENT</span>
+                  </div>
+
+                  <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+                    Sample Vulnerability &amp; Penetration Test Report
+                  </h3>
+                  
+                  <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                    Review an authentic documentation sample showcasing BtmSecurity&apos;s offensive methodology, vulnerability risk scoring, CVSS mapping, and remediation roadmaps.
+                  </p>
+
+                  <div className="flex flex-wrap items-center gap-4 text-xs font-mono text-slate-400 pt-1">
+                    <span className="flex items-center gap-1.5">
+                      <i className="fas fa-network-wired text-cyan-400" />
+                      <span>Target Scope: 192.168.XX.XX (Lab Enclave)</span>
+                    </span>
+                    <span className="flex items-center gap-1.5">
+                      <i className="fas fa-file-pdf text-red-400" />
+                      <span>Format: Full Technical PDF</span>
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex flex-col items-start lg:items-end shrink-0 pt-2 lg:pt-0">
+                  <a
+                    href="https://btmsecurity-btmvulnlab-public-portfolio-report.tiiny.site"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-semibold text-sm shadow-lg shadow-blue-600/30 hover:shadow-blue-500/50 transition-all duration-300 group"
+                  >
+                    <i className="fas fa-file-arrow-down text-base group-hover:scale-110 transition-transform" />
+                    <span>Download Sample Lab Pentest Report (PDF)</span>
+                    <svg
+                      className="w-4 h-4 ml-1 opacity-70 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
+
+                  <p className="text-[11px] text-slate-400 font-mono mt-2.5 max-w-sm text-left lg:text-right">
+                    Demonstration artifact from an isolated lab environment. Not a real client engagement.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Additional Services Section */}
         <section className="py-12 sm:py-20 px-4 sm:px-6">
           <div className="max-w-7xl mx-auto">

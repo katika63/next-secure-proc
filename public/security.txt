@@ -2,7 +2,7 @@
 # Standard: RFC 9116 (https://www.rfc-editor.org/rfc/rfc9116)
 # Canonical URL: https://www.btmsec.com/security.txt
 
-Contact: mailto:security@btmsec.com
+Contact: mailto:security.research@btmsec.com
 Contact: https://www.btmsec.com/contact
 Expires: 2027-12-31T23:59:59.000Z
 Encryption: https://www.btmsec.com/contact
@@ -17,5 +17,5 @@ Acknowledgments: https://www.btmsec.com/vulnerability-disclosure#hall-of-fame
 # 1. Reports must include target URL, impacted endpoint, and benign Proof of Concept (PoC).
 # 2. Provide detailed step-by-step reproduction instructions and sample HTTP request/response logs.
 # 3. Only non-destructive testing is authorized; do not access or destroy client/user data.
-# 4. Email reports to security@btmsec.com or submit via https://www.btmsec.com/contact.
+# 4. Email reports to security.research@btmsec.com or submit via https://www.btmsec.com/contact.
 # 5. Response SLA: We acknowledge submissions within 1 business day.
