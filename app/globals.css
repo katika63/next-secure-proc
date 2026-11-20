@@ -110,6 +110,21 @@ body {
   }
 }
 
+/* ── Infinite Marquee ──────────────────────────────────────────────────── */
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  /* 50% = one full copy of the duplicated list → seamless loop */
+  animation: marquee 32s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
 /* Animations */
 @keyframes radarSweep {
   0% {
