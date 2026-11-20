@@ -31,7 +31,7 @@ interface Playbook {
   result?: string
 }
 
-export default function DynamicSentinelAIPage() {
+export default function DynamicBTMAgentPage() {
   const [activeTab, setActiveTab] = useState<string>('Chat')
   
   // Chat State
@@ -40,7 +40,7 @@ export default function DynamicSentinelAIPage() {
       id: 'welcome-1',
       sender: 'ai',
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      content: '<h2 class="text-blue-400 font-bold mt-2 mb-2 text-sm">🛡️ BTM Sentinel AI — Online</h2>Welcome to the Security Intelligence Workspace. I can help you with:<br><br><div class="flex items-start gap-2 mt-1"><span class="w-1.5 h-1.5 rounded-full bg-blue-400 shrink-0 mt-1.5"></span><span><strong class="text-white">CVE Analysis:</strong> Type any CVE ID (e.g. CVE-2024-3094)</span></div><div class="flex items-start gap-2 mt-1"><span class="w-1.5 h-1.5 rounded-full bg-blue-400 shrink-0 mt-1.5"></span><span><strong class="text-white">Threat Intelligence:</strong> Ask about malware, APT groups, TTPs</span></div><div class="flex items-start gap-2 mt-1"><span class="w-1.5 h-1.5 rounded-full bg-blue-400 shrink-0 mt-1.5"></span><span><strong class="text-white">Incident Response:</strong> Playbook guidance and mitigation strategies</span></div><br>How can I assist your security team today?'
+      content: '<h2 class="text-blue-400 font-bold mt-2 mb-2 text-sm">🛡️ BTM Agent — Online</h2>Welcome to the Security Intelligence Workspace. I can help you with:<br><br><div class="flex items-start gap-2 mt-1"><span class="w-1.5 h-1.5 rounded-full bg-blue-400 shrink-0 mt-1.5"></span><span><strong class="text-white">CVE Analysis:</strong> Type any CVE ID (e.g. CVE-2024-3094)</span></div><div class="flex items-start gap-2 mt-1"><span class="w-1.5 h-1.5 rounded-full bg-blue-400 shrink-0 mt-1.5"></span><span><strong class="text-white">Threat Intelligence:</strong> Ask about malware, APT groups, TTPs</span></div><div class="flex items-start gap-2 mt-1"><span class="w-1.5 h-1.5 rounded-full bg-blue-400 shrink-0 mt-1.5"></span><span><strong class="text-white">Incident Response:</strong> Playbook guidance and mitigation strategies</span></div><br>How can I assist your security team today?'
     }
   ])
   const [inputQuery, setInputQuery] = useState('')
@@ -56,9 +56,9 @@ export default function DynamicSentinelAIPage() {
   // Terminal State
   const [terminalInput, setTerminalInput] = useState('')
   const [terminalLogs, setTerminalLogs] = useState<string[]>([
-    'BTM SENTINEL AI SECURITY TERMINAL [v2.3.0-RELEASE]',
+    'BTM AGENT SECURITY TERMINAL [v2.3.0-RELEASE]',
     'Type "help" for available commands or "scan <target>" to analyze host security.',
-    'System status: ONLINE | Node ID: SENTINEL-NODE-01 | Encrypted TLS 1.3 channel established.',
+    'System status: ONLINE | Node ID: BTM-AGENT-NODE-01 | Encrypted TLS 1.3 channel established.',
     '------------------------------------------------------------------------------------'
   ])
   const [terminalLoading, setTerminalLoading] = useState(false)
@@ -155,7 +155,7 @@ export default function DynamicSentinelAIPage() {
         cveData: data.cveData
       }])
     } catch (err) {
-      setMessages(prev => [...prev, { id: `err-${Date.now()}`, sender: 'ai', timestamp: timeStr, content: '⚠️ Failed to connect to Sentinel AI.' }])
+      setMessages(prev => [...prev, { id: `err-${Date.now()}`, sender: 'ai', timestamp: timeStr, content: '⚠️ Failed to connect to BTM Agent.' }])
     } finally {
       setLoading(false)
     }
@@ -168,13 +168,13 @@ export default function DynamicSentinelAIPage() {
 
     const cmd = terminalInput.trim()
     const timestamp = new Date().toLocaleTimeString()
-    setTerminalLogs(prev => [...prev, `[${timestamp}] sentinel@security-node:~$ ${cmd}`])
+    setTerminalLogs(prev => [...prev, `[${timestamp}] agent@security-node:~$ ${cmd}`])
     setTerminalInput('')
     
     const lower = cmd.toLowerCase()
     
     if (lower === 'clear') {
-      setTerminalLogs(['BTM SENTINEL AI SECURITY TERMINAL [v2.3.0-RELEASE]', '------------------------------------------------------------------------------------'])
+      setTerminalLogs(['BTM AGENT SECURITY TERMINAL [v2.3.0-RELEASE]', '------------------------------------------------------------------------------------'])
       return
     }
 
@@ -380,7 +380,10 @@ export default function DynamicSentinelAIPage() {
       <div className="absolute bottom-10 right-10 w-[500px] h-[500px] bg-blue-700/10 rounded-full blur-[150px] pointer-events-none" />
       
       {/* ─── TOP HEADER BAR ────────────────────────────────────────────────────────── */}
-      <header className="h-16 border-b border-[#0f1d38] bg-[#040a17]/95 backdrop-blur-xl sticky top-0 z-50 px-3 sm:px-6 flex items-center justify-between">
+      <header 
+        className="h-16 border-b border-[#0f1d38] bg-[#040a17]/95 backdrop-blur-xl sticky top-0 z-50 px-3 sm:px-6 flex items-center justify-between"
+        style={{ position: 'sticky', top: 0 }}
+      >
         <div className="flex items-center space-x-2 sm:space-x-3">
           <Link href="/" className="flex items-center space-x-2 group">
             <i className="fas fa-shield-alt text-blue-500 text-xl sm:text-2xl group-hover:scale-105 transition-transform" />
@@ -394,7 +397,7 @@ export default function DynamicSentinelAIPage() {
           </Link>
           <div className="h-5 w-px bg-[#1e2942]" />
           <div>
-            <div className="text-[10px] sm:text-xs font-bold tracking-wider text-white font-mono uppercase">SENTINEL AI</div>
+            <div className="text-[10px] sm:text-xs font-bold tracking-wider text-white font-mono uppercase">BTM AGENT</div>
             <div className="hidden sm:block text-[10px] text-slate-400 font-mono tracking-tight">AI SECURITY INTELLIGENCE</div>
           </div>
         </div>
@@ -511,7 +514,7 @@ export default function DynamicSentinelAIPage() {
           
           <div className="bg-[#050c1e]/90 border border-[#0f1d38] rounded-xl p-4 sm:p-6 shadow-xl relative overflow-hidden flex justify-between items-center">
             <div className="space-y-1 sm:space-y-2 max-w-lg z-10">
-              <div className="text-xs font-bold text-blue-400 tracking-wider font-mono uppercase">BTM SENTINEL AI</div>
+              <div className="text-xs font-bold text-blue-400 tracking-wider font-mono uppercase">BTM AGENT</div>
               <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-white tracking-tight">{activeTab} Workspace</h1>
               <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">Dynamic security operations powered by Gemini AI.</p>
             </div>
@@ -564,7 +567,7 @@ export default function DynamicSentinelAIPage() {
                 {loading && (
                   <div className="flex items-center gap-2 text-slate-400 font-mono text-xs">
                     <div className="w-4 h-4 rounded-full border-2 border-blue-500 border-t-transparent animate-spin" />
-                    Sentinel AI reasoning...
+                    BTM Agent reasoning...
                   </div>
                 )}
               </div>
@@ -578,7 +581,7 @@ export default function DynamicSentinelAIPage() {
                   type="text"
                   value={inputQuery}
                   onChange={(e) => setInputQuery(e.target.value)}
-                  placeholder="Ask Sentinel AI..."
+                  placeholder="Ask BTM Agent..."
                   disabled={loading}
                   className="w-full pl-3 sm:pl-4 pr-12 sm:pr-14 py-2.5 sm:py-3 bg-[#030816] border border-[#122244] focus:border-blue-500 rounded-xl text-base sm:text-sm text-white placeholder-slate-500 outline-none transition-colors"
                 />
@@ -604,7 +607,7 @@ export default function DynamicSentinelAIPage() {
                   <span className="w-3 h-3 rounded-full bg-rose-500/80" />
                   <span className="w-3 h-3 rounded-full bg-amber-500/80" />
                   <span className="w-3 h-3 rounded-full bg-emerald-500/80" />
-                  <span className="text-[10px] text-slate-500 ml-1 sm:ml-2 font-bold truncate">sentinel@cyber-node-01</span>
+                  <span className="text-[10px] text-slate-500 ml-1 sm:ml-2 font-bold truncate">agent@cyber-node-01</span>
                 </div>
                 <span className="text-[9px] sm:text-[10px] text-cyan-500 font-mono">TLS 1.3 ENCRYPTED</span>
               </div>
@@ -623,7 +626,7 @@ export default function DynamicSentinelAIPage() {
               {/* Fixed input bar */}
               <form onSubmit={handleTerminalCommand} className="mt-3 pt-3 border-t border-[#0f1d38] flex items-center space-x-1 sm:space-x-2 shrink-0">
                 <span className="text-cyan-400 text-[10px] sm:text-xs font-bold shrink-0">
-                  <span className="hidden sm:inline">sentinel@security-node:~$</span>
+                  <span className="hidden sm:inline">agent@security-node:~$</span>
                   <span className="sm:hidden">$</span>
                 </span>
                 <input
@@ -684,7 +687,7 @@ export default function DynamicSentinelAIPage() {
                       <p className="text-xs text-slate-300 line-clamp-2 mb-3 leading-relaxed">{displaySummary}</p>
                       
                       <button onClick={() => handleCveClick(displayId)} className="text-[11px] font-bold text-blue-400 hover:text-cyan-400 flex items-center gap-1 font-mono">
-                        Analyze with Sentinel AI <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                        Analyze with BTM Agent <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                       </button>
                       
                       {activeCveAnalysis?.id === displayId && activeCveAnalysis && (
@@ -692,7 +695,7 @@ export default function DynamicSentinelAIPage() {
                           {activeCveAnalysis.content === 'Analyzing...' ? (
                             <div className="animate-pulse flex items-center gap-2 font-mono text-cyan-400 text-xs">
                               <div className="w-3 h-3 rounded-full border-2 border-blue-500 border-t-transparent animate-spin" />
-                              Sentinel AI analyzing risk & TTPs...
+                              BTM Agent analyzing risk & TTPs...
                             </div>
                           ) : (
                             <>
@@ -769,7 +772,7 @@ export default function DynamicSentinelAIPage() {
 
               <div className="flex-1 overflow-y-auto bg-[#030816] rounded-xl border border-[#102246] p-3 sm:p-5">
                 {tabLoading ? (
-                  <div className="animate-pulse flex items-center gap-2 text-slate-400 text-xs font-mono"><div className="w-4 h-4 rounded-full border-2 border-blue-500 border-t-transparent animate-spin" />Sentinel AI generating report...</div>
+                  <div className="animate-pulse flex items-center gap-2 text-slate-400 text-xs font-mono"><div className="w-4 h-4 rounded-full border-2 border-blue-500 border-t-transparent animate-spin" />BTM Agent generating report...</div>
                 ) : tabResult ? (
                   <div dangerouslySetInnerHTML={{ __html: tabResult }} className="text-xs text-slate-300 leading-relaxed space-y-3" />
                 ) : (

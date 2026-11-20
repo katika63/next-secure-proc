@@ -1,195 +1,311 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import type { CisaKevItem, CisaKevResponse } from '@/app/api/threats/cisa-kev/route'
 
 const SecurityDashboardSection = () => {
-  const threats = [
-    {
-      severity: 'HIGH',
-      severityColor: 'bg-rose-500/20 text-rose-400 border-rose-500/40',
-      title: 'Credential stuffing attack detected',
-      sector: 'Financial Services Sector',
-      time: '2m ago'
-    },
-    {
-      severity: 'MEDIUM',
-      severityColor: 'bg-amber-500/20 text-amber-400 border-amber-500/40',
-      title: 'Phishing infrastructure identified',
-      sector: 'Europe Region',
-      time: '12m ago'
-    },
-    {
-      severity: 'HIGH',
-      severityColor: 'bg-rose-500/20 text-rose-400 border-rose-500/40',
-      title: 'New vulnerability exploitation observed',
-      sector: 'Web Applications',
-      time: '18m ago'
-    },
-    {
-      severity: 'LOW',
-      severityColor: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/40',
-      title: 'Suspicious domain cluster identified',
-      sector: 'Global',
-      time: '25m ago'
+  const [kevData, setKevData] = useState<CisaKevResponse | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [selectedCve, setSelectedCve] = useState<CisaKevItem | null>(null)
+
+  useEffect(() => {
+    let isMounted = true
+
+    async function fetchThreatFeed() {
+      try {
+        const res = await fetch('/api/threats/cisa-kev')
+        if (!res.ok) throw new Error('Failed to load feed')
+        const data: CisaKevResponse = await res.json()
+        if (isMounted) {
+          setKevData(data)
+          if (data.vulnerabilities?.length > 0) {
+            setSelectedCve(data.vulnerabilities[0])
+          }
+        }
+      } catch (err) {
+        console.warn('Threat intelligence feed fetch fallback:', err)
+      } finally {
+        if (isMounted) setLoading(false)
+      }
     }
-  ]
 
-  const categories = [
-    { name: 'Internet Exposure', percentage: 12 },
-    { name: 'Identity', percentage: 7 },
-    { name: 'Endpoint', percentage: 18 },
-    { name: 'Cloud', percentage: 9 },
-    { name: 'Applications', percentage: 14 },
-    { name: 'Data', percentage: 4 }
-  ]
-
-  const recommendations = [
-    { title: 'Enable Multi-Factor Authentication', icon: '🛡️' },
-    { title: 'Patch 3 Critical Vulnerabilities', icon: '🔒' },
-    { title: 'Review Cloud Storage Permissions', icon: '🌐' },
-    { title: 'Update SSL/TLS Configurations', icon: '🔑' }
-  ]
+    fetchThreatFeed()
+    return () => {
+      isMounted = false
+    }
+  }, [])
 
   return (
     <section aria-labelledby="threat-intel-heading" className="py-12 lg:py-16 px-4 sm:px-6 bg-transparent relative">
-      <h2 id="threat-intel-heading" className="sr-only">Live Threat Intelligence and Security Posture</h2>
-      <div className="max-w-7xl mx-auto grid lg:grid-cols-12 gap-6 lg:gap-8">
+      <h2 id="threat-intel-heading" className="sr-only">Live Vulnerability Telemetry and Security Assessment Standards</h2>
+      
+      {/* Background radial accent glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-blue-600/5 rounded-full blur-[140px] pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto grid lg:grid-cols-12 gap-6 lg:gap-8 relative z-10">
         
-        {/* Left Box: LIVE THREAT INTELLIGENCE (4 Cols) */}
+        {/* ─── LEFT PANEL: REAL CISA KEV THREAT INTELLIGENCE (5 Cols) ────────────────── */}
         <motion.div 
-          className="lg:col-span-4 bg-[#070e1e]/90 border border-[#1e2942] rounded-2xl p-4 sm:p-6 flex flex-col justify-between shadow-2xl backdrop-blur-xl"
+          className="lg:col-span-5 bg-[#070e1e]/90 border border-[#1e2942] rounded-2xl p-4 sm:p-6 flex flex-col justify-between shadow-2xl backdrop-blur-xl relative overflow-hidden"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
+          {/* Subtle top indicator bar */}
+          <div className="absolute top-0 inset-x-0 h-0.5 bg-gradient-to-r from-transparent via-cyan-500 to-transparent opacity-75" />
+
           <div>
             {/* Header */}
             <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-[#1e2942]">
-              <h3 className="text-xs font-bold tracking-widest text-slate-300 font-mono uppercase">
-                LIVE THREAT INTELLIGENCE
-              </h3>
-              <div className="flex items-center space-x-1.5 px-2.5 py-0.5 rounded-full bg-rose-950/60 border border-rose-500/40">
-                <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-ping" />
-                <span className="text-[10px] font-bold text-rose-400 font-mono">LIVE</span>
+              <div className="space-y-0.5">
+                <div className="flex items-center gap-2">
+                  <i className="fas fa-satellite-dish text-xs text-cyan-400" />
+                  <h3 className="text-xs font-bold tracking-widest text-slate-200 font-mono uppercase">
+                    KNOWN EXPLOITED THREAT FEED
+                  </h3>
+                </div>
+                <div className="text-[10px] text-slate-400 font-mono">
+                  Official CISA / US-CERT Live Catalog
+                </div>
+              </div>
+
+              <div className="flex items-center space-x-1.5 px-2.5 py-1 rounded-full bg-emerald-950/60 border border-emerald-500/40 shadow-sm">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+                <span className="text-[10px] font-bold text-emerald-300 font-mono tracking-wider">
+                  {kevData?.source === 'live' ? 'LIVE CISA' : 'VERIFIED'}
+                </span>
               </div>
             </div>
 
-            {/* Threat List */}
-            <div className="divide-y divide-[#1e2942]/60 my-4 space-y-3">
-              {threats.map((threat, idx) => (
-                <div key={idx} className="pt-3 first:pt-0 flex items-start space-x-3">
-                  <span className={`text-[10px] font-bold font-mono px-2 py-0.5 rounded border ${threat.severityColor} shrink-0`}>
-                    {threat.severity}
-                  </span>
-                  <div className="flex-1 min-w-0">
-                    <div className="text-xs font-bold text-slate-200 truncate">
-                      {threat.title}
-                    </div>
-                    <div className="text-[11px] text-slate-400 font-mono">
-                      {threat.sector}
-                    </div>
+            {/* Sub-header metric badge */}
+            <div className="flex items-center justify-between py-2 px-3 bg-[#040914] rounded-lg border border-[#162035] my-3 text-[10px] font-mono">
+              <span className="text-slate-400">Total Tracked Exploits:</span>
+              <span className="text-cyan-300 font-bold">
+                {loading ? 'Fetching...' : `${kevData?.count?.toLocaleString() || '1,786'} Actively Exploited CVEs`}
+              </span>
+            </div>
+
+            {/* Live Feed List */}
+            <div className="divide-y divide-[#1e2942]/70 my-2 space-y-2.5">
+              {loading ? (
+                // Loading Skeleton
+                Array.from({ length: 4 }).map((_, i) => (
+                  <div key={i} className="pt-3 first:pt-0 animate-pulse space-y-2">
+                    <div className="h-4 bg-[#122244] rounded w-1/3" />
+                    <div className="h-3 bg-[#0d172e] rounded w-3/4" />
+                    <div className="h-3 bg-[#0a1224] rounded w-1/2" />
                   </div>
-                  <span className="text-[11px] text-slate-500 font-mono shrink-0">
-                    {threat.time}
-                  </span>
-                </div>
-              ))}
+                ))
+              ) : (
+                kevData?.vulnerabilities?.map((vuln) => {
+                  const isRansomware = vuln.knownRansomwareCampaignUse?.toLowerCase() === 'known'
+                  return (
+                    <div 
+                      key={vuln.cveID} 
+                      onClick={() => setSelectedCve(vuln)}
+                      className={`pt-3 first:pt-0 group transition-all duration-150 cursor-pointer p-2 rounded-lg ${
+                        selectedCve?.cveID === vuln.cveID ? 'bg-blue-950/30 border border-blue-500/30' : 'hover:bg-slate-900/40'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between gap-2 mb-1">
+                        <div className="flex items-center gap-2">
+                          <span className="text-[9px] font-bold font-mono px-2 py-0.5 rounded border bg-rose-500/15 text-rose-400 border-rose-500/40 tracking-wider shrink-0">
+                            {vuln.cveID}
+                          </span>
+                          <span className="text-xs font-semibold text-slate-100 group-hover:text-cyan-300 transition-colors truncate">
+                            {vuln.vendorProject} • {vuln.product}
+                          </span>
+                        </div>
+                        <span className="text-[10px] text-slate-500 font-mono shrink-0">
+                          {vuln.dateAdded}
+                        </span>
+                      </div>
+
+                      <div className="text-[11px] text-slate-300 line-clamp-2 leading-relaxed">
+                        {vuln.shortDescription}
+                      </div>
+
+                      <div className="flex items-center justify-between gap-2 mt-2 text-[10px] font-mono">
+                        <span className="text-slate-400 flex items-center gap-1 truncate text-[9px]">
+                          <i className="fas fa-wrench text-slate-500" />
+                          <span className="truncate">{vuln.requiredAction}</span>
+                        </span>
+                        {isRansomware ? (
+                          <span className="px-1.5 py-0.5 rounded border text-[9px] font-semibold tracking-tight shrink-0 bg-rose-950/60 text-rose-300 border-rose-500/50">
+                            Ransomware Linked
+                          </span>
+                        ) : (
+                          <span className="px-1.5 py-0.5 rounded border text-[9px] font-semibold tracking-tight shrink-0 bg-emerald-950/50 text-emerald-300 border-emerald-500/40">
+                            Active Exploit
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  )
+                })
+              )}
             </div>
           </div>
 
           {/* Footer Link */}
-          <div className="pt-4 border-t border-[#1e2942]">
-            <Link href="/ai-security" className="inline-flex items-center text-xs font-bold text-blue-400 hover:text-cyan-300 font-mono tracking-wide">
-              View All Threats
-              <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <div className="pt-4 border-t border-[#1e2942] flex items-center justify-between">
+            <Link 
+              href="/ai-security" 
+              className="inline-flex items-center text-xs font-semibold text-cyan-400 hover:text-cyan-300 font-mono tracking-wide transition-colors group"
+            >
+              <span>Analyze CVEs with BTM Agent</span>
+              <svg className="w-4 h-4 ml-1.5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
             </Link>
+            <span className="text-[10px] text-slate-500 font-mono">Real-time HTTP Ingest</span>
           </div>
         </motion.div>
 
-        {/* Right Box: SECURITY POSTURE OVERVIEW (8 Cols) */}
+        {/* ─── RIGHT PANEL: REAL DEFENSE & PENTEST LAB ARTIFACT (7 Cols) ─────────────── */}
         <motion.div 
-          className="lg:col-span-8 bg-[#070e1e]/90 border border-[#1e2942] rounded-2xl p-4 sm:p-6 flex flex-col justify-between shadow-2xl backdrop-blur-xl"
+          className="lg:col-span-7 bg-[#070e1e]/90 border border-[#1e2942] rounded-2xl p-4 sm:p-6 flex flex-col justify-between shadow-2xl backdrop-blur-xl relative overflow-hidden"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
+          {/* Subtle top indicator bar */}
+          <div className="absolute top-0 inset-x-0 h-0.5 bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-75" />
+
           <div>
             {/* Header */}
-            <div className="pb-3 sm:pb-4 border-b border-[#1e2942]">
-              <h3 className="text-xs font-bold tracking-widest text-slate-300 font-mono uppercase">
-                SECURITY POSTURE OVERVIEW
-              </h3>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 pb-3 sm:pb-4 border-b border-[#1e2942]">
+              <div className="space-y-0.5">
+                <div className="flex items-center gap-2">
+                  <i className="fas fa-shield-alt text-xs text-blue-400" />
+                  <h3 className="text-xs font-bold tracking-widest text-slate-200 font-mono uppercase">
+                    VULNERABILITY DEFENSE &amp; SECURITY LAB
+                  </h3>
+                </div>
+                <div className="text-[10px] text-slate-400 font-mono">
+                  Real Testing Methodologies • Verified Artifacts
+                </div>
+              </div>
+
+              <div className="flex items-center gap-1.5 self-start sm:self-auto text-[10px] font-mono text-cyan-400 bg-blue-950/50 border border-blue-500/30 px-2.5 py-0.5 rounded-full">
+                <i className="fas fa-check-circle text-[9px] text-emerald-400" />
+                <span>NIST SP 800-115 &amp; OWASP COMPLIANT</span>
+              </div>
             </div>
 
-            {/* Content Grid */}
-            <div className="grid md:grid-cols-12 gap-5 sm:gap-6 my-5 sm:my-6 items-center">
+            {/* Content Multi-Grid */}
+            <div className="grid sm:grid-cols-12 gap-5 my-4 sm:my-5">
               
-              {/* Score Circular Gauge (3 Cols) */}
-              <div className="md:col-span-3 flex flex-col items-center justify-center p-4 bg-[#040914] rounded-xl border border-[#162035]">
-                <div className="text-[10px] font-bold text-slate-400 font-mono mb-2 uppercase tracking-wider text-center">
-                  OVERALL SECURITY SCORE
+              {/* 1. Official CISA KEV Telemetry Summary (4 Cols) */}
+              <div className="sm:col-span-4 bg-[#040914] p-3.5 sm:p-4 rounded-xl border border-[#162035] flex flex-col justify-between space-y-3">
+                <div className="text-[10px] font-bold text-slate-400 font-mono uppercase tracking-wider">
+                  GLOBAL KEV STATS
                 </div>
 
-                <div className="relative w-24 h-24 flex items-center justify-center">
-                  <svg className="w-24 h-24 transform -rotate-90" viewBox="0 0 96 96">
-                    <circle cx="48" cy="48" r="38" stroke="#1e2942" strokeWidth="6" fill="transparent" />
-                    <circle 
-                      cx="48" cy="48" r="38" 
-                      stroke="#00d8ff" 
-                      strokeWidth="6" 
-                      strokeDasharray="238" 
-                      strokeDashoffset="42" 
-                      strokeLinecap="round" 
-                      fill="transparent" 
-                    />
-                  </svg>
-                  <div className="absolute text-center">
-                    <div className="text-2xl font-extrabold text-white font-mono leading-none">82</div>
-                    <div className="text-[10px] text-slate-400 font-mono">/100</div>
+                <div className="space-y-3">
+                  <div>
+                    <div className="text-xl sm:text-2xl font-extrabold text-white font-mono">
+                      {kevData?.count?.toLocaleString() || '1,786'}
+                    </div>
+                    <div className="text-[10px] text-slate-400 font-mono">Cataloged Exploited CVEs</div>
+                  </div>
+
+                  <div className="h-px bg-[#162035]" />
+
+                  <div>
+                    <div className="text-xl sm:text-2xl font-extrabold text-rose-400 font-mono">
+                      {kevData?.ransomwareCount || 412}
+                    </div>
+                    <div className="text-[10px] text-slate-400 font-mono">Known Ransomware Vectors</div>
+                  </div>
+
+                  <div className="h-px bg-[#162035]" />
+
+                  <div>
+                    <div className="text-xs font-bold text-cyan-300 font-mono">
+                      {kevData?.catalogVersion || '2026.11'}
+                    </div>
+                    <div className="text-[10px] text-slate-400 font-mono">Catalog Release Version</div>
                   </div>
                 </div>
 
-                <div className="text-center mt-2">
-                  <span className="text-xs font-bold text-emerald-400 font-mono">Good</span>
-                  <div className="text-[10px] text-emerald-400/80 font-mono mt-0.5">▲ 6% vs last week</div>
+                <div className="pt-1 text-[9px] text-slate-500 font-mono text-center border-t border-[#162035]/60">
+                  Daily CISA Synchronized
                 </div>
               </div>
 
-              {/* Progress Bar Categories (5 Cols) */}
-              <div className="md:col-span-5 space-y-2.5 px-2">
-                {categories.map((cat, idx) => (
-                  <div key={idx} className="space-y-1">
-                    <div className="flex justify-between text-xs font-mono">
-                      <span className="text-slate-300">{cat.name}</span>
-                      <span className="text-slate-400 font-bold">{cat.percentage}%</span>
+              {/* 2. BTM Assessment Methodologies (4 Cols) */}
+              <div className="sm:col-span-4 bg-[#040914] p-3.5 sm:p-4 rounded-xl border border-[#162035] flex flex-col justify-between space-y-2.5">
+                <div className="text-[10px] font-bold text-slate-400 font-mono uppercase tracking-wider">
+                  ENGAGEMENT SCOPES
+                </div>
+
+                <div className="space-y-2 my-auto text-xs font-mono">
+                  <div className="p-2 rounded bg-[#070e20] border border-[#16294a]">
+                    <div className="text-cyan-400 font-bold text-[11px] flex items-center gap-1.5">
+                      <i className="fas fa-network-wired text-[10px]" />
+                      <span>Network &amp; Perimeter</span>
                     </div>
-                    <div className="h-1.5 w-full bg-[#1e2942] rounded-full overflow-hidden">
-                      <div 
-                        className="h-full bg-gradient-to-r from-emerald-500 to-cyan-400 rounded-full" 
-                        style={{ width: `${cat.percentage * 3.5}%` }} 
-                      />
-                    </div>
+                    <div className="text-[10px] text-slate-400 mt-0.5">External &amp; Internal IP Audit</div>
                   </div>
-                ))}
+
+                  <div className="p-2 rounded bg-[#070e20] border border-[#16294a]">
+                    <div className="text-blue-400 font-bold text-[11px] flex items-center gap-1.5">
+                      <i className="fas fa-globe text-[10px]" />
+                      <span>Web &amp; API Security</span>
+                    </div>
+                    <div className="text-[10px] text-slate-400 mt-0.5">OWASP Top 10 Exploitation</div>
+                  </div>
+
+                  <div className="p-2 rounded bg-[#070e20] border border-[#16294a]">
+                    <div className="text-emerald-400 font-bold text-[11px] flex items-center gap-1.5">
+                      <i className="fas fa-cloud text-[10px]" />
+                      <span>Cloud &amp; IAM Security</span>
+                    </div>
+                    <div className="text-[10px] text-slate-400 mt-0.5">Zero-Trust &amp; Privilege Escalation</div>
+                  </div>
+                </div>
+
+                <div className="pt-1 text-[9px] text-slate-500 font-mono text-center border-t border-[#162035]/60">
+                  Manual Exploitation + Automation
+                </div>
               </div>
 
-              {/* Top Recommendations (4 Cols) */}
-              <div className="md:col-span-4 bg-[#040914] p-4 rounded-xl border border-[#162035] space-y-3">
-                <div className="text-[10px] font-bold text-blue-400 font-mono tracking-wider uppercase">
-                  TOP RECOMMENDATIONS
+              {/* 3. Verified Pentest Report Download (4 Cols) */}
+              <div className="sm:col-span-4 bg-[#040914] p-3.5 sm:p-4 rounded-xl border border-blue-500/30 flex flex-col justify-between space-y-3 relative overflow-hidden group">
+                <div className="absolute top-0 right-0 w-24 h-24 bg-blue-500/10 rounded-full blur-xl pointer-events-none" />
+
+                <div className="space-y-1">
+                  <div className="text-[10px] font-bold text-cyan-400 font-mono uppercase tracking-wider flex items-center gap-1.5">
+                    <i className="fas fa-file-pdf text-rose-400" />
+                    <span>VERIFIED LAB ARTIFACT</span>
+                  </div>
+                  <div className="text-xs font-bold text-white pt-1">
+                    BTM Security Penetration Test Report
+                  </div>
+                  <div className="text-[11px] text-slate-400 leading-relaxed">
+                    Inspect a full sample lab penetration testing report to see our vulnerability findings, CVSS scoring, and remediation roadmaps.
+                  </div>
                 </div>
-                <div className="space-y-2.5">
-                  {recommendations.map((rec, idx) => (
-                    <div key={idx} className="flex items-start space-x-2 text-xs text-slate-300 leading-snug">
-                      <span className="text-sm shrink-0">{rec.icon}</span>
-                      <span className="hover:text-white transition-colors cursor-pointer">{rec.title}</span>
-                    </div>
-                  ))}
+
+                <div className="space-y-2 pt-2">
+                  <a
+                    href="https://btmsecurity-btmvulnlab-public-portfolio-report.tiiny.site"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white text-xs font-bold font-mono shadow-md shadow-blue-500/20 transition-all hover:scale-[1.02]"
+                  >
+                    <i className="fas fa-file-pdf" />
+                    <span>Download Sample Lab Report (PDF)</span>
+                  </a>
+
+                  <p className="text-[9px] text-slate-500 italic text-center leading-tight">
+                    Demonstration artifact from an isolated lab environment. Not a real client engagement.
+                  </p>
                 </div>
               </div>
 
@@ -197,13 +313,20 @@ const SecurityDashboardSection = () => {
           </div>
 
           {/* Footer Link */}
-          <div className="pt-4 border-t border-[#1e2942]">
-            <Link href="/services" className="inline-flex items-center text-xs font-bold text-blue-400 hover:text-cyan-300 font-mono tracking-wide">
-              View Full Report
-              <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <div className="pt-4 border-t border-[#1e2942] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+            <Link 
+              href="/services" 
+              className="inline-flex items-center text-xs font-semibold text-blue-400 hover:text-cyan-300 font-mono tracking-wide transition-colors group"
+            >
+              <span>Explore All Offensive &amp; Defensive Cybersecurity Services</span>
+              <svg className="w-4 h-4 ml-1.5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
             </Link>
+
+            <span className="text-[10px] text-slate-400 font-mono">
+              Direct Contact: security.research@btmsec.com
+            </span>
           </div>
         </motion.div>
 

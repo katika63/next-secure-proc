@@ -13,6 +13,7 @@ const Navigation = ({ currentPath = '/' }: NavigationProps) => {
   const pathname = usePathname()
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
   const [servicesOpen, setServicesOpen] = useState(false)
   const [trainingOpen, setTrainingOpen] = useState(false)
   const [resourcesOpen, setResourcesOpen] = useState(false)
@@ -25,6 +26,17 @@ const Navigation = ({ currentPath = '/' }: NavigationProps) => {
   const servicesRef = useRef<HTMLDivElement>(null)
   const resourcesRef = useRef<HTMLDivElement>(null)
   const aboutRef = useRef<HTMLDivElement>(null)
+
+  // Client-safe scroll listener for dynamic sticky header elevation
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 8)
+    }
+
+    handleScroll()
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   const closeAllDropdowns = () => {
     setServicesOpen(false)
@@ -68,14 +80,23 @@ const Navigation = ({ currentPath = '/' }: NavigationProps) => {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
-  // Hide global main navigation on AI Security page to use dedicated Sentinel AI header
+  // Hide global main navigation on AI Security page to use dedicated BTM Agent header
   if (pathname === '/ai-security' || pathname?.startsWith('/ai-security')) {
     return null
   }
 
   return (
-    <header className="sticky top-0 z-[100] w-full">
-      <div className="w-full bg-[#030712]/95 backdrop-blur-xl border-b border-[#12203a]">
+    <header 
+      className="sticky top-0 z-[100] w-full"
+      style={{ position: 'sticky', top: 0 }}
+    >
+      <div 
+        className={`w-full bg-[#030712]/95 backdrop-blur-xl border-b transition-[box-shadow,border-color] duration-200 ${
+          isScrolled 
+            ? 'border-[#1b2b48] shadow-lg shadow-black/40' 
+            : 'border-[#12203a]'
+        }`}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between">
         
         {/* BTM Security Brand Logo */}
@@ -508,7 +529,7 @@ const Navigation = ({ currentPath = '/' }: NavigationProps) => {
                 className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl border border-blue-500/40 bg-[#09152b] text-cyan-300 text-sm font-semibold font-mono shadow-md"
               >
                 <i className="fas fa-shield-virus" />
-                <span>Launch BTM Sentinel AI</span>
+                <span>Launch BTM Agent</span>
               </Link>
 
               <Link

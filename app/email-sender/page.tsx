@@ -8,6 +8,8 @@ interface FormState {
   cc: string
   bcc: string
   subject: string
+  fullName: string
+  jobTitle: string
   bodyMode: 'text' | 'html'
   bodyContent: string
 }
@@ -29,16 +31,34 @@ function parseEmailList(input: string): string[] {
 }
 
 export default function EmailSenderPage() {
+  const SENDER_DEFAULTS: Record<string, { fullName: string; jobTitle: string }> = {
+    'security@research.btmsec.com': {
+      fullName: 'BTM Security Operations',
+      jobTitle: 'AI-Powered Cyber Defense & SecOps',
+    },
+    'disclosure@research.btmsec.com': {
+      fullName: 'BTM Vulnerability Disclosure',
+      jobTitle: 'Coordinated Vulnerability Research',
+    },
+    'advisory@research.btmsec.com': {
+      fullName: 'BTM Threat Advisory',
+      jobTitle: 'Threat Intelligence & Security Research',
+    },
+  }
+
   const [formData, setFormData] = useState<FormState>({
     from: 'security@research.btmsec.com',
     to: '',
     cc: '',
     bcc: '',
     subject: '',
+    fullName: 'BTM Security Operations',
+    jobTitle: 'AI-Powered Cyber Defense & SecOps',
     bodyMode: 'text',
     bodyContent: ''
   })
 
+  const [showSigPreview, setShowSigPreview] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [status, setStatus] = useState<SendStatus>({ type: 'idle', message: '' })
 
@@ -53,7 +73,16 @@ export default function EmailSenderPage() {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
+    if (name === 'from' && SENDER_DEFAULTS[value]) {
+      setFormData((prev) => ({
+        ...prev,
+        from: value,
+        fullName: prev.fullName === SENDER_DEFAULTS[prev.from]?.fullName ? SENDER_DEFAULTS[value].fullName : prev.fullName,
+        jobTitle: prev.jobTitle === SENDER_DEFAULTS[prev.from]?.jobTitle ? SENDER_DEFAULTS[value].jobTitle : prev.jobTitle,
+      }))
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }))
+    }
   }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -124,12 +153,16 @@ export default function EmailSenderPage() {
       subject: string
       text?: string
       html?: string
+      fullName?: string
+      jobTitle?: string
     } = {
       from: formData.from,
       to: toRecipients,
       cc: ccRecipients.length > 0 ? ccRecipients : undefined,
       bcc: bccRecipients.length > 0 ? bccRecipients : undefined,
-      subject: formData.subject.trim()
+      subject: formData.subject.trim(),
+      fullName: formData.fullName.trim() || undefined,
+      jobTitle: formData.jobTitle.trim() || undefined,
     }
 
     if (formData.bodyMode === 'html') {
@@ -270,6 +303,47 @@ export default function EmailSenderPage() {
             <p className="text-[11px] text-slate-500 font-mono mt-1">
               Sends from research.btmsec.com. Replies route to security.research@ or disclosure.research@btmsec.com.
             </p>
+          </div>
+
+          {/* Signature Identity (Sender Profile) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-3.5 rounded-xl bg-[#030712]/40 border border-[#1e2942]/60">
+            <div>
+              <div className="flex items-center justify-between mb-1.5">
+                <label htmlFor="field-fullname" className="text-xs font-mono font-medium uppercase tracking-wider text-slate-300">
+                  Signature Name
+                </label>
+                <span className="text-[10px] text-slate-500 font-mono">Sign-off Identity</span>
+              </div>
+              <input
+                id="field-fullname"
+                name="fullName"
+                type="text"
+                disabled={isSubmitting}
+                value={formData.fullName}
+                onChange={handleInputChange}
+                placeholder="BTM Security Operations"
+                className="w-full px-3 py-2 rounded-lg bg-[#030712]/70 border border-slate-700/80 text-white placeholder-slate-500 text-xs focus:outline-none focus:ring-1 focus:ring-blue-500 transition-all disabled:opacity-50"
+              />
+            </div>
+
+            <div>
+              <div className="flex items-center justify-between mb-1.5">
+                <label htmlFor="field-jobtitle" className="text-xs font-mono font-medium uppercase tracking-wider text-slate-300">
+                  Signature Title
+                </label>
+                <span className="text-[10px] text-slate-500 font-mono">Designation</span>
+              </div>
+              <input
+                id="field-jobtitle"
+                name="jobTitle"
+                type="text"
+                disabled={isSubmitting}
+                value={formData.jobTitle}
+                onChange={handleInputChange}
+                placeholder="AI-Powered Cyber Defense & SecOps"
+                className="w-full px-3 py-2 rounded-lg bg-[#030712]/70 border border-slate-700/80 text-white placeholder-slate-500 text-xs focus:outline-none focus:ring-1 focus:ring-blue-500 transition-all disabled:opacity-50"
+              />
+            </div>
           </div>
 
           {/* TO Field */}
@@ -431,6 +505,257 @@ export default function EmailSenderPage() {
             <p className="text-[11px] text-slate-500 font-mono mt-1">
               Replies route to Zoho. Not editable.
             </p>
+          </div>
+
+          {/* Signature Live Preview Accordion */}
+          <div className="rounded-xl border border-[#1e2942]/70 bg-[#030712]/40 overflow-hidden">
+            <button
+              type="button"
+              onClick={() => setShowSigPreview(!showSigPreview)}
+              className="w-full px-4 py-2.5 text-xs font-mono font-medium text-slate-300 hover:text-white flex items-center justify-between transition-colors"
+            >
+              <span className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
+                <span>Branded Email Signature (Appended Automatically)</span>
+              </span>
+              <span className="text-[11px] text-blue-400">
+                {showSigPreview ? 'Hide Preview ▲' : 'Show Preview ▼'}
+              </span>
+            </button>
+
+            {showSigPreview && (
+              <div className="p-4 border-t border-[#1e2942]/70 bg-[#ffffff] rounded-b-xl overflow-x-auto text-[#0b1428]">
+                <table
+                  cellPadding="0"
+                  cellSpacing="0"
+                  border={0}
+                  width="620"
+                  style={{
+                    width: '100%',
+                    maxWidth: '620px',
+                    background: '#ffffff',
+                    fontFamily: 'Arial,Helvetica,sans-serif',
+                    color: '#0b1428',
+                    borderCollapse: 'collapse',
+                  }}
+                >
+                  <tbody>
+                    <tr>
+                      <td style={{ padding: '20px', background: '#ffffff' }}>
+                        <table cellPadding="0" cellSpacing="0" border={0} width="100%">
+                          <tbody>
+                            <tr>
+                              {/* LOGO */}
+                              <td
+                                width="175"
+                                valign="middle"
+                                style={{
+                                  width: '175px',
+                                  paddingRight: '18px',
+                                  borderRight: '3px solid #1677ed',
+                                }}
+                              >
+                                <table cellPadding="0" cellSpacing="0" border={0} width="100%">
+                                  <tbody>
+                                    <tr>
+                                      <td
+                                        align="center"
+                                        style={{
+                                          background: '#0b1428',
+                                          padding: '13px 5px 10px',
+                                          borderBottom: '4px solid #12b8ed',
+                                        }}
+                                      >
+                                        <div
+                                          style={{
+                                            fontSize: '34px',
+                                            fontWeight: 900,
+                                            letterSpacing: '-2px',
+                                            lineHeight: 1.1,
+                                            color: '#ffffff',
+                                          }}
+                                        >
+                                          BTM<span style={{ color: '#12b8ed' }}>.</span>
+                                        </div>
+                                        <div
+                                          style={{
+                                            fontSize: '12px',
+                                            fontWeight: 'bold',
+                                            letterSpacing: '4px',
+                                            color: '#ffffff',
+                                            marginTop: '5px',
+                                          }}
+                                        >
+                                          SECURITY
+                                        </div>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td
+                                        align="center"
+                                        style={{
+                                          paddingTop: '10px',
+                                          fontSize: '9px',
+                                          fontWeight: 'bold',
+                                          letterSpacing: '1.5px',
+                                          color: '#1677ed',
+                                        }}
+                                      >
+                                        DETECT · DEFEND · THRIVE
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </td>
+
+                              {/* CONTACT DETAILS */}
+                              <td valign="middle" style={{ paddingLeft: '20px' }}>
+                                <div
+                                  style={{
+                                    fontSize: '23px',
+                                    fontWeight: 'bold',
+                                    lineHeight: 1.3,
+                                    color: '#0b1428',
+                                  }}
+                                >
+                                  {formData.fullName || 'BTM Security Operations'}
+                                </div>
+                                <div
+                                  style={{
+                                    fontSize: '14px',
+                                    fontWeight: 'bold',
+                                    color: '#1677ed',
+                                    paddingTop: '3px',
+                                  }}
+                                >
+                                  {formData.jobTitle || 'AI-Powered Cyber Defense & SecOps'}
+                                </div>
+                                <div
+                                  style={{
+                                    fontSize: '12px',
+                                    color: '#64748b',
+                                    paddingTop: '4px',
+                                  }}
+                                >
+                                  Blue Team Module Security
+                                </div>
+                                <div
+                                  style={{
+                                    height: '1px',
+                                    background: '#dce6f2',
+                                    margin: '12px 0',
+                                  }}
+                                />
+                                <table
+                                  cellPadding="0"
+                                  cellSpacing="0"
+                                  border={0}
+                                  style={{
+                                    fontSize: '12px',
+                                    lineHeight: 2,
+                                    color: '#0b1428',
+                                  }}
+                                >
+                                  <tbody>
+                                    <tr>
+                                      <td style={{ fontWeight: 'bold', paddingRight: '9px' }}>
+                                        WEB
+                                      </td>
+                                      <td>
+                                        <a
+                                          href="https://www.btmsec.com"
+                                          target="_blank"
+                                          rel="noreferrer"
+                                          style={{ color: '#1677ed', textDecoration: 'none' }}
+                                        >
+                                          www.btmsec.com
+                                        </a>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td style={{ fontWeight: 'bold', paddingRight: '9px' }}>
+                                        EMAIL
+                                      </td>
+                                      <td>
+                                        <a
+                                          href={`mailto:${derivedReplyTo}`}
+                                          style={{ color: '#1677ed', textDecoration: 'none' }}
+                                        >
+                                          {derivedReplyTo}
+                                        </a>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td style={{ fontWeight: 'bold', paddingRight: '9px' }}>
+                                        LOCATION
+                                      </td>
+                                      <td style={{ color: '#0b1428' }}>
+                                        Global Operation
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style={{ padding: '4px 20px 17px', background: '#ffffff' }}>
+                        <div
+                          style={{
+                            fontSize: '14px',
+                            fontWeight: 'bold',
+                            letterSpacing: '0.4px',
+                            color: '#1677ed',
+                          }}
+                        >
+                          CYBERSECURITY. INTELLIGENCE. RESILIENCE.
+                        </div>
+                        <div
+                          style={{
+                            fontSize: '11px',
+                            lineHeight: 1.7,
+                            color: '#475569',
+                            paddingTop: '5px',
+                          }}
+                        >
+                          AI-Powered Security Operations · Threat Intelligence · Vulnerability Assessment · Security Research
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        style={{
+                          background: '#0b1428',
+                          borderTop: '3px solid #12b8ed',
+                          padding: '14px 20px',
+                        }}
+                      >
+                        <div
+                          style={{
+                            fontSize: '13px',
+                            fontWeight: 'bold',
+                            letterSpacing: '0.7px',
+                            color: '#ffffff',
+                          }}
+                        >
+                          GLOBAL REACH
+                          <span style={{ color: '#12b8ed' }}> · AFRICAN PRIORITY</span>
+                        </div>
+                        <div style={{ fontSize: '11px', color: '#cbd5e1', paddingTop: '6px' }}>
+                          Building a safer and more resilient digital world.
+                        </div>
+                        <div style={{ fontSize: '9px', color: '#64748b', paddingTop: '9px' }}>
+                          © BTMSecurity | Blue Team Module Security
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
 
           {/* Submit Action */}
