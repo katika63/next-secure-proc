@@ -31,22 +31,26 @@ interface Playbook {
   result?: string
 }
 
+const WELCOME_MESSAGE: Message = {
+  id: 'welcome-1',
+  sender: 'ai',
+  timestamp: 'Online',
+  content: '<h2 class="text-blue-400 font-bold mt-1 mb-2 text-sm">🛡️ BTM Agent — Online</h2>Welcome to the Security Intelligence Workspace. I can help you with:<br><br><div class="flex items-start gap-2 mt-1"><span class="w-1.5 h-1.5 rounded-full bg-blue-400 shrink-0 mt-1.5"></span><span><strong class="text-white">CVE Analysis:</strong> Type any CVE ID (e.g. CVE-2024-3094)</span></div><div class="flex items-start gap-2 mt-1"><span class="w-1.5 h-1.5 rounded-full bg-blue-400 shrink-0 mt-1.5"></span><span><strong class="text-white">Log &amp; IOC Triage:</strong> Paste raw logs, IPs, or headers for instant analysis</span></div><div class="flex items-start gap-2 mt-1"><span class="w-1.5 h-1.5 rounded-full bg-blue-400 shrink-0 mt-1.5"></span><span><strong class="text-white">Incident Response:</strong> Playbook guidance and mitigation strategies</span></div><br>How can I assist your security team today?'
+}
+
 export default function DynamicBTMAgentPage() {
   const [activeTab, setActiveTab] = useState<string>('Chat')
   
   // Chat State
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: 'welcome-1',
-      sender: 'ai',
-      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      content: '<h2 class="text-blue-400 font-bold mt-2 mb-2 text-sm">🛡️ BTM Agent — Online</h2>Welcome to the Security Intelligence Workspace. I can help you with:<br><br><div class="flex items-start gap-2 mt-1"><span class="w-1.5 h-1.5 rounded-full bg-blue-400 shrink-0 mt-1.5"></span><span><strong class="text-white">CVE Analysis:</strong> Type any CVE ID (e.g. CVE-2024-3094)</span></div><div class="flex items-start gap-2 mt-1"><span class="w-1.5 h-1.5 rounded-full bg-blue-400 shrink-0 mt-1.5"></span><span><strong class="text-white">Threat Intelligence:</strong> Ask about malware, APT groups, TTPs</span></div><div class="flex items-start gap-2 mt-1"><span class="w-1.5 h-1.5 rounded-full bg-blue-400 shrink-0 mt-1.5"></span><span><strong class="text-white">Incident Response:</strong> Playbook guidance and mitigation strategies</span></div><br>How can I assist your security team today?'
-    }
-  ])
+  const [messages, setMessages] = useState<Message[]>([WELCOME_MESSAGE])
   const [inputQuery, setInputQuery] = useState('')
   const [loading, setLoading] = useState(false)
   const [copiedId, setCopiedId] = useState<string | null>(null)
+  const [showScrollBottom, setShowScrollBottom] = useState(false)
+  const [lastFailedQuery, setLastFailedQuery] = useState<string | null>(null)
   const chatContainerRef = useRef<HTMLDivElement>(null)
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const abortControllerRef = useRef<AbortController | null>(null)
 
   // Telemetry
   const [visitorIp, setVisitorIp] = useState<string>('Detecting...')
@@ -121,12 +125,68 @@ export default function DynamicBTMAgentPage() {
     }
   }, [terminalLogs, terminalLoading])
 
+  // Auto-resize chat textarea as user types
+  useEffect(() => {
+    const el = textareaRef.current
+    if (!el) return
+    el.style.height = 'auto'
+    el.style.height = `${Math.min(el.scrollHeight, 160)}px`
+  }, [inputQuery])
+
+  const scrollToBottom = () => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTo({
+        top: chatContainerRef.current.scrollHeight,
+        behavior: 'smooth'
+      })
+    }
+  }
+
+  const handleChatScroll = () => {
+    const el = chatContainerRef.current
+    if (!el) return
+    const distanceFromBottom = el.scrollHeight - el.scrollTop - el.clientHeight
+    setShowScrollBottom(distanceFromBottom > 120)
+  }
+
+  const handleCopyMessage = async (id: string, htmlContent: string) => {
+    try {
+      const tempDiv = document.createElement('div')
+      tempDiv.innerHTML = htmlContent
+        .replace(/<br\s*\/?>/gi, '\n')
+        .replace(/<\/(p|div|li|h1|h2|h3|h4)>/gi, '\n')
+      const plainText = (tempDiv.textContent || tempDiv.innerText || '').trim()
+      await navigator.clipboard.writeText(plainText)
+      setCopiedId(id)
+      setTimeout(() => setCopiedId(prev => (prev === id ? null : prev)), 2000)
+    } catch {
+      // Clipboard fallback ignored
+    }
+  }
+
+  const handleClearChat = () => {
+    if (loading) {
+      abortControllerRef.current?.abort()
+      setLoading(false)
+    }
+    setMessages([WELCOME_MESSAGE])
+    setLastFailedQuery(null)
+    setShowScrollBottom(false)
+    setTimeout(() => textareaRef.current?.focus(), 50)
+  }
+
+  const handleStopGenerating = () => {
+    abortControllerRef.current?.abort()
+    setLoading(false)
+  }
+
   // Chat Handler
   const handleSendMessage = async (queryText?: string) => {
-    const textToSend = queryText || inputQuery
-    if (!textToSend.trim() || loading) return
+    const textToSend = (queryText ?? inputQuery).trim()
+    if (!textToSend || loading) return
 
     setActiveTab('Chat')
+    setLastFailedQuery(null)
 
     const now = new Date()
     const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
@@ -140,11 +200,15 @@ export default function DynamicBTMAgentPage() {
     const mode = cveMatch ? 'cve_lookup' : 'chat'
     const cveId = cveMatch ? cveMatch[1].toUpperCase() : null
 
+    const controller = new AbortController()
+    abortControllerRef.current = controller
+
     try {
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: textToSend, mode, cveId })
+        body: JSON.stringify({ message: textToSend, mode, cveId }),
+        signal: controller.signal
       })
       const data = await res.json()
       setMessages(prev => [...prev, {
@@ -154,10 +218,27 @@ export default function DynamicBTMAgentPage() {
         content: data.response || 'Security analysis complete.',
         cveData: data.cveData
       }])
-    } catch (err) {
-      setMessages(prev => [...prev, { id: `err-${Date.now()}`, sender: 'ai', timestamp: timeStr, content: '⚠️ Failed to connect to BTM Agent.' }])
+    } catch (err: any) {
+      if (err?.name === 'AbortError') {
+        setMessages(prev => [...prev, {
+          id: `abort-${Date.now()}`,
+          sender: 'ai',
+          timestamp: timeStr,
+          content: '<span class="text-slate-400 italic">Generation stopped by user.</span>'
+        }])
+      } else {
+        setLastFailedQuery(textToSend)
+        setMessages(prev => [...prev, {
+          id: `err-${Date.now()}`,
+          sender: 'ai',
+          timestamp: timeStr,
+          content: '⚠️ Failed to connect to BTM Agent. Please check your connection or retry.'
+        }])
+      }
     } finally {
+      abortControllerRef.current = null
       setLoading(false)
+      setTimeout(() => textareaRef.current?.focus(), 50)
     }
   }
 
@@ -395,11 +476,6 @@ export default function DynamicBTMAgentPage() {
               <span className="text-[9px] sm:text-[10px] text-slate-400 font-sans tracking-tight">Blue Team Module Security</span>
             </div>
           </Link>
-          <div className="h-5 w-px bg-[#1e2942]" />
-          <div>
-            <div className="text-[10px] sm:text-xs font-bold tracking-wider text-white font-mono uppercase">BTM AGENT</div>
-            <div className="hidden sm:block text-[10px] text-slate-400 font-mono tracking-tight">AI SECURITY INTELLIGENCE</div>
-          </div>
         </div>
 
         {/* Desktop Nav */}
@@ -419,20 +495,14 @@ export default function DynamicBTMAgentPage() {
           ))}
         </nav>
 
-        <div className="flex items-center space-x-2 sm:space-x-4">
+        <div className="flex items-center">
           <Link
-            href="/"
-            className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg bg-blue-600/10 hover:bg-blue-600/25 border border-blue-500/30 hover:border-blue-400/60 text-blue-300 hover:text-white text-xs font-semibold font-mono transition-all duration-200 shadow-sm group shrink-0"
-            title="Return to BTM Security Home"
+            href="/tools/dork-intelligence"
+            className="flex items-center gap-2 px-3 sm:px-3.5 py-1.5 rounded-lg bg-[#0a1124]/90 hover:bg-cyan-950/50 border border-[#1e2942] hover:border-cyan-500/60 text-slate-200 hover:text-white text-xs font-semibold font-mono transition-all duration-200 shadow-sm shrink-0"
           >
-            <i className="fas fa-home text-blue-400 group-hover:scale-110 transition-transform text-xs" />
-            <span>Home</span>
+            <i className="fas fa-terminal text-cyan-400 text-xs" />
+            <span>Dork Intelligence</span>
           </Link>
-          <div className="hidden md:flex items-center space-x-2 text-[11px] font-mono text-slate-400 bg-[#09152b] border border-[#14284d] px-3 py-1 rounded-lg">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span>IP: {visitorIp}</span>
-          </div>
-          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 flex items-center justify-center text-xs font-bold text-white shadow-md border border-blue-400/40">AD</div>
         </div>
       </header>
 
@@ -512,88 +582,240 @@ export default function DynamicBTMAgentPage() {
         {/* ─── CENTER WORKSPACE (Cols 4-9) ───────────────────────────────────────── */}
         <main className="lg:col-span-6 space-y-4 flex flex-col justify-start">
           
-          <div className="bg-[#050c1e]/90 border border-[#0f1d38] rounded-xl p-4 sm:p-6 shadow-xl relative overflow-hidden flex justify-between items-center">
-            <div className="space-y-1 sm:space-y-2 max-w-lg z-10">
-              <div className="text-xs font-bold text-blue-400 tracking-wider font-mono uppercase">BTM AGENT</div>
-              <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-white tracking-tight">{activeTab} Workspace</h1>
-              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">Dynamic security operations powered by Gemini AI.</p>
+          <div className="bg-[#050c1e]/90 border border-[#0f1d38] rounded-xl px-4 py-3 sm:px-5 sm:py-4 shadow-xl relative overflow-hidden flex justify-between items-center gap-3">
+            <div className="space-y-0.5 z-10">
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] font-bold text-blue-400 tracking-wider font-mono uppercase">BTM AGENT</span>
+                <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-emerald-950/60 border border-emerald-500/30 text-[9px] font-mono text-emerald-400">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  ONLINE
+                </span>
+              </div>
+              <h1 className="text-lg sm:text-xl lg:text-2xl font-extrabold text-white tracking-tight">{activeTab} Workspace</h1>
             </div>
+
+            {activeTab === 'Chat' && (
+              <div className="flex items-center gap-2 shrink-0">
+                <button
+                  type="button"
+                  onClick={handleClearChat}
+                  disabled={messages.length <= 1 && !loading}
+                  title="Start a new conversation"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#09152b] hover:bg-[#0f2244] disabled:opacity-40 disabled:cursor-not-allowed border border-[#162a50] hover:border-blue-500/40 text-xs font-mono text-slate-300 hover:text-white transition-all"
+                >
+                  <i className="fas fa-rotate-right text-[10px] text-cyan-400" />
+                  <span className="hidden sm:inline">New Chat</span>
+                </button>
+              </div>
+            )}
           </div>
 
           {/* CHAT TAB */}
           {activeTab === 'Chat' && (
-            <div className="h-[500px] sm:h-[580px] lg:h-[calc(100vh-220px)] flex flex-col">
+            <div className="h-[calc(100dvh-215px)] min-h-[480px] lg:h-[calc(100vh-190px)] flex flex-col relative">
               {/* Scrollable messages area */}
               <div
                 ref={chatContainerRef}
-                className="bg-[#050c1e]/90 border border-[#0f1d38] rounded-xl p-3 sm:p-5 shadow-xl flex-1 min-h-0 overflow-y-auto space-y-4 sm:space-y-6 mb-3 scrollbar-thin scrollbar-thumb-[#1e3b75] scrollbar-track-transparent"
+                onScroll={handleChatScroll}
+                className="bg-[#050c1e]/90 border border-[#0f1d38] rounded-xl p-3 sm:p-5 shadow-xl flex-1 min-h-0 overflow-y-auto space-y-4 sm:space-y-5 mb-2.5 scrollbar-thin scrollbar-thumb-[#1e3b75] scrollbar-track-transparent relative"
               >
-                {messages.map(msg => (
-                  <div key={msg.id} className="mb-4">
-                    {msg.sender === 'user' && (
-                      <div className="flex justify-end items-start gap-2 sm:gap-3">
-                        <div className="max-w-[85%] sm:max-w-md bg-[#0a1835] border border-[#1a2e57] rounded-2xl p-3 sm:p-4 text-xs text-slate-100 shadow-md">
-                          <p>{msg.content}</p>
+                {messages.map((msg, index) => {
+                  const isErrorMsg = msg.id.startsWith('err-')
+                  const isLastMessage = index === messages.length - 1
+                  return (
+                    <div key={msg.id} className="group">
+                      {msg.sender === 'user' && (
+                        <div className="flex justify-end items-start gap-2 sm:gap-3">
+                          <div className="max-w-[85%] sm:max-w-lg bg-[#0a1835] border border-[#1a2e57] rounded-2xl rounded-tr-sm p-3 sm:p-3.5 text-xs sm:text-sm text-slate-100 shadow-md">
+                            <p className="whitespace-pre-wrap break-words leading-relaxed">{msg.content}</p>
+                            <div className="text-[10px] font-mono text-slate-400 mt-1.5 text-right">{msg.timestamp}</div>
+                          </div>
+                          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#0a1835] border border-[#1a2e57] flex items-center justify-center text-xs shrink-0 text-blue-300">
+                            <i className="fas fa-user text-[11px]" />
+                          </div>
                         </div>
-                        <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#0a1835] border border-[#1a2e57] flex items-center justify-center text-xs shrink-0">👤</div>
-                      </div>
-                    )}
-                    {msg.sender === 'ai' && (
-                      <div className="flex items-start gap-2 sm:gap-3">
-                        <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-blue-600 flex items-center justify-center text-xs font-bold text-white shadow-lg shrink-0">AI</div>
-                        <div className="flex-1 bg-[#040916] border border-[#0f1d38] rounded-2xl p-3 sm:p-5 text-xs text-slate-200 shadow-xl overflow-x-auto">
-                          <div
-                            style={{ lineHeight: '1.7', whiteSpace: 'pre-wrap' }}
-                            className="text-slate-300 text-xs sm:text-sm"
-                            dangerouslySetInnerHTML={{ __html: msg.content }}
-                          />
-                          {msg.cveData && (
-                            <div className="mt-4 pt-3 border-t border-[#0e1b34] space-y-3">
-                              <div>
-                                <div className="font-bold text-white mb-1 text-xs">Overview</div>
-                                <p className="text-slate-300 text-xs">{msg.cveData.overview}</p>
-                              </div>
-                              <div className="flex flex-wrap gap-2 sm:gap-3 items-center">
-                                <span className="text-rose-400 font-bold px-2 py-0.5 bg-rose-950 rounded border border-rose-500 text-xs font-mono">{msg.cveData.severity}</span>
-                                <span className="text-slate-400 text-xs font-mono">CVSS: {msg.cveData.cvssScore}</span>
-                              </div>
+                      )}
+                      {msg.sender === 'ai' && (
+                        <div className="flex items-start gap-2 sm:gap-3">
+                          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-br from-blue-600 to-cyan-500 flex items-center justify-center text-[11px] font-bold text-white shadow-lg shrink-0">
+                            AI
+                          </div>
+                          <div className="flex-1 min-w-0 bg-[#040916] border border-[#0f1d38] rounded-2xl rounded-tl-sm p-3 sm:p-4 text-xs text-slate-200 shadow-xl overflow-x-auto relative">
+                            {/* Top meta bar: timestamp + Copy button */}
+                            <div className="flex items-center justify-between gap-2 mb-2 pb-1.5 border-b border-[#0c1730]">
+                              <span className="text-[10px] font-mono text-slate-500">BTM Agent • {msg.timestamp}</span>
+                              <button
+                                type="button"
+                                onClick={() => handleCopyMessage(msg.id, msg.content)}
+                                className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-[#081228] hover:bg-[#0e1f42] border border-[#14274d] text-[10px] font-mono text-slate-400 hover:text-cyan-300 transition-colors"
+                                title="Copy response to clipboard"
+                              >
+                                <i className={`fas ${copiedId === msg.id ? 'fa-check text-emerald-400' : 'fa-copy'} text-[9px]`} />
+                                <span>{copiedId === msg.id ? 'Copied' : 'Copy'}</span>
+                              </button>
                             </div>
-                          )}
+
+                            <div
+                              style={{ lineHeight: '1.7', whiteSpace: 'pre-wrap' }}
+                              className="text-slate-300 text-xs sm:text-sm break-words"
+                              dangerouslySetInnerHTML={{ __html: msg.content }}
+                            />
+
+                            {isErrorMsg && isLastMessage && lastFailedQuery && (
+                              <div className="mt-3">
+                                <button
+                                  type="button"
+                                  onClick={() => handleSendMessage(lastFailedQuery)}
+                                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-rose-950/60 hover:bg-rose-900/70 border border-rose-500/40 text-xs font-mono text-rose-200 transition-colors"
+                                >
+                                  <i className="fas fa-redo text-[10px]" />
+                                  <span>Retry Request</span>
+                                </button>
+                              </div>
+                            )}
+
+                            {msg.cveData && (
+                              <div className="mt-4 pt-3 border-t border-[#0e1b34] space-y-3">
+                                <div>
+                                  <div className="font-bold text-white mb-1 text-xs">Overview</div>
+                                  <p className="text-slate-300 text-xs leading-relaxed">{msg.cveData.overview}</p>
+                                </div>
+                                <div className="flex flex-wrap gap-2 sm:gap-3 items-center">
+                                  <span className="text-rose-400 font-bold px-2 py-0.5 bg-rose-950 rounded border border-rose-500 text-xs font-mono">{msg.cveData.severity}</span>
+                                  <span className="text-slate-400 text-xs font-mono">CVSS: {msg.cveData.cvssScore}</span>
+                                </div>
+                                {msg.cveData.mitigationSteps && msg.cveData.mitigationSteps.length > 0 && (
+                                  <div>
+                                    <div className="font-bold text-cyan-400 mb-1 text-xs font-mono">Recommended Mitigation</div>
+                                    <ul className="list-disc pl-4 space-y-1 text-xs text-slate-300">
+                                      {msg.cveData.mitigationSteps.map((step, idx) => (
+                                        <li key={idx}>{step}</li>
+                                      ))}
+                                    </ul>
+                                  </div>
+                                )}
+                              </div>
+                            )}
+                          </div>
                         </div>
-                      </div>
-                    )}
-                  </div>
-                ))}
+                      )}
+                    </div>
+                  )
+                })}
                 {loading && (
-                  <div className="flex items-center gap-2 text-slate-400 font-mono text-xs">
-                    <div className="w-4 h-4 rounded-full border-2 border-blue-500 border-t-transparent animate-spin" />
-                    BTM Agent reasoning...
+                  <div className="flex items-start gap-2 sm:gap-3">
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-br from-blue-600 to-cyan-500 flex items-center justify-center text-[11px] font-bold text-white shadow-lg shrink-0">
+                      AI
+                    </div>
+                    <div className="bg-[#040916] border border-[#0f1d38] rounded-2xl rounded-tl-sm px-4 py-3 flex items-center gap-2.5 text-slate-300 font-mono text-xs">
+                      <div className="w-3.5 h-3.5 rounded-full border-2 border-cyan-400 border-t-transparent animate-spin" />
+                      <span>BTM Agent analyzing...</span>
+                    </div>
                   </div>
                 )}
               </div>
 
-              {/* Chat input */}
+              {/* Scroll-to-bottom floating button */}
+              {showScrollBottom && (
+                <button
+                  type="button"
+                  onClick={scrollToBottom}
+                  aria-label="Scroll to latest messages"
+                  className="absolute right-4 bottom-36 sm:bottom-32 z-20 w-8 h-8 rounded-full bg-blue-600/90 hover:bg-blue-500 text-white shadow-lg border border-blue-400/40 flex items-center justify-center transition-all"
+                >
+                  <i className="fas fa-arrow-down text-xs" />
+                </button>
+              )}
+
+              {/* Quick Prompt Chips */}
+              <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-2 shrink-0">
+                {[
+                  { label: 'CVE-2024-3400', icon: 'fa-bug', query: 'Analyze CVE-2024-3400 impact and mitigation', sendNow: true },
+                  { label: 'Ransomware Playbook', icon: 'fa-shield-virus', query: 'Provide a step-by-step ransomware containment playbook', sendNow: true },
+                  { label: 'Paste Log / IOC', icon: 'fa-terminal', query: 'Analyze this security log for IOCs and suspicious activity:\n\n', sendNow: false },
+                  { label: 'Cloud IAM Audit', icon: 'fa-cloud', query: 'What are the top AWS IAM privilege escalation risks to audit?', sendNow: true }
+                ].map(chip => (
+                  <button
+                    key={chip.label}
+                    type="button"
+                    disabled={loading}
+                    onClick={() => {
+                      if (chip.sendNow) {
+                        handleSendMessage(chip.query)
+                      } else {
+                        setInputQuery(chip.query)
+                        setTimeout(() => textareaRef.current?.focus(), 20)
+                      }
+                    }}
+                    className="shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#071229] hover:bg-[#0d2045] disabled:opacity-50 border border-[#162a52] hover:border-cyan-500/40 text-[11px] font-mono text-slate-300 hover:text-cyan-300 transition-colors"
+                  >
+                    <i className={`fas ${chip.icon} text-[10px] text-blue-400`} />
+                    <span>{chip.label}</span>
+                  </button>
+                ))}
+              </div>
+
+              {/* Convenient Multi-line Chat Input */}
               <form
                 onSubmit={(e) => { e.preventDefault(); handleSendMessage(); }}
-                className="bg-[#050c1e]/90 border border-[#0f1d38] rounded-xl p-2.5 sm:p-3 shadow-xl relative shrink-0"
+                className="bg-[#050c1e]/95 border border-[#14284d] focus-within:border-blue-500/70 rounded-xl p-2.5 sm:p-3 shadow-xl shrink-0 transition-colors"
               >
-                <input
-                  type="text"
-                  value={inputQuery}
-                  onChange={(e) => setInputQuery(e.target.value)}
-                  placeholder="Ask BTM Agent..."
-                  disabled={loading}
-                  className="w-full pl-3 sm:pl-4 pr-12 sm:pr-14 py-2.5 sm:py-3 bg-[#030816] border border-[#122244] focus:border-blue-500 rounded-xl text-base sm:text-sm text-white placeholder-slate-500 outline-none transition-colors"
-                />
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="absolute right-4 sm:right-5 top-1/2 -translate-y-1/2 p-2 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white rounded-lg transition-colors"
-                >
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                  </svg>
-                </button>
+                <div className="flex items-end gap-2">
+                  <textarea
+                    ref={textareaRef}
+                    rows={1}
+                    value={inputQuery}
+                    onChange={(e) => setInputQuery(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault()
+                        handleSendMessage()
+                      }
+                    }}
+                    placeholder="Ask BTM Agent — paste logs, enter a CVE ID, or press Shift+Enter for new line..."
+                    disabled={loading}
+                    className="flex-1 resize-none bg-transparent px-2 py-1.5 text-base sm:text-sm text-white placeholder-slate-500 outline-none max-h-40 overflow-y-auto scrollbar-thin scrollbar-thumb-[#1e3b75] scrollbar-track-transparent"
+                  />
+
+                  {inputQuery && !loading && (
+                    <button
+                      type="button"
+                      onClick={() => { setInputQuery(''); textareaRef.current?.focus() }}
+                      aria-label="Clear input"
+                      className="p-2 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800/60 transition-colors shrink-0"
+                    >
+                      <i className="fas fa-times text-xs" />
+                    </button>
+                  )}
+
+                  {loading ? (
+                    <button
+                      type="button"
+                      onClick={handleStopGenerating}
+                      title="Stop generating"
+                      className="px-3 py-2 bg-rose-600/90 hover:bg-rose-500 text-white rounded-lg transition-colors flex items-center gap-1.5 text-xs font-mono shrink-0"
+                    >
+                      <i className="fas fa-stop text-[10px]" />
+                      <span className="hidden sm:inline">Stop</span>
+                    </button>
+                  ) : (
+                    <button
+                      type="submit"
+                      disabled={!inputQuery.trim()}
+                      title="Send message (Enter)"
+                      className="p-2.5 bg-blue-600 hover:bg-blue-500 disabled:opacity-40 disabled:cursor-not-allowed text-white rounded-lg transition-colors shrink-0 shadow-md shadow-blue-600/20"
+                    >
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                      </svg>
+                    </button>
+                  )}
+                </div>
+
+                <div className="hidden sm:flex items-center justify-between mt-1.5 pt-1.5 border-t border-[#0d1c3a] px-2 text-[10px] font-mono text-slate-500">
+                  <span>Enter to send • Shift + Enter for new line</span>
+                  <span>Supports CVE IDs, raw logs &amp; MITRE TTPs</span>
+                </div>
               </form>
             </div>
           )}

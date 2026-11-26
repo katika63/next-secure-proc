@@ -114,7 +114,7 @@ const Navigation = ({ currentPath = '/' }: NavigationProps) => {
         </Link>
 
         {/* Complete Center Navigation Links (Desktop) */}
-        <nav className="hidden lg:flex items-center space-x-7 text-sm font-medium text-slate-300">
+        <nav className="hidden lg:flex items-center space-x-6 xl:space-x-7 text-sm font-medium text-slate-300">
           
           {/* 1. Home */}
           <Link 
@@ -220,10 +220,14 @@ const Navigation = ({ currentPath = '/' }: NavigationProps) => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 8 }}
                   transition={{ duration: 0.15 }}
-                  className="absolute left-0 mt-2 w-52 bg-[#0a1124] border border-[#1e2942] rounded-xl shadow-2xl p-2 z-50"
+                  className="absolute left-0 mt-2 w-60 bg-[#0a1124] border border-[#1e2942] rounded-xl shadow-2xl p-2 z-50"
                 >
                   <Link href="/blog" onClick={closeAllDropdowns} className="block px-4 py-2.5 text-sm text-slate-300 hover:text-white hover:bg-blue-600/20 rounded-lg transition-colors">
                     Blog & Articles
+                  </Link>
+                  <Link href="/tools/dork-intelligence" onClick={closeAllDropdowns} className="px-4 py-2.5 text-sm text-slate-300 hover:text-white hover:bg-blue-600/20 rounded-lg transition-colors flex items-center justify-between">
+                    <span>Dork Intelligence</span>
+                    <span className="text-[10px] bg-cyan-500/20 text-cyan-300 px-1.5 py-0.5 rounded border border-cyan-500/30 font-mono">OSINT</span>
                   </Link>
                 </motion.div>
               )}
@@ -291,10 +295,22 @@ const Navigation = ({ currentPath = '/' }: NavigationProps) => {
         </nav>
 
         {/* Right Action Buttons (Desktop) */}
-        <div className="hidden lg:flex items-center space-x-3">
+        <div className="hidden lg:flex items-center space-x-3 shrink-0">
+          <Link
+            href="/tools/dork-intelligence"
+            className={`flex items-center gap-2 border px-3.5 py-2 rounded-lg text-xs font-medium transition-all duration-200 shadow-sm whitespace-nowrap ${
+              pathname === '/tools/dork-intelligence'
+                ? 'border-cyan-500/70 bg-cyan-950/50 text-cyan-300'
+                : 'border-[#1e2942] hover:border-cyan-500/60 bg-[#0a1124]/80 text-slate-200 hover:text-white'
+            }`}
+          >
+            <i className="fas fa-terminal text-cyan-400 text-xs" />
+            <span>Dork Intelligence</span>
+          </Link>
+
           <Link
             href="/ai-security"
-            className="flex items-center gap-2 border border-[#1e2942] hover:border-blue-500/60 bg-[#0a1124]/80 text-slate-200 hover:text-white px-3.5 py-2 rounded-lg text-xs font-medium transition-all duration-200 shadow-sm"
+            className="flex items-center gap-2 border border-[#1e2942] hover:border-blue-500/60 bg-[#0a1124]/80 text-slate-200 hover:text-white px-3.5 py-2 rounded-lg text-xs font-medium transition-all duration-200 shadow-sm whitespace-nowrap"
           >
             <i className="fas fa-brain text-blue-400 text-xs" />
             <span>AI Security</span>
@@ -436,6 +452,21 @@ const Navigation = ({ currentPath = '/' }: NavigationProps) => {
               >
                 <i className="fas fa-newspaper text-blue-400 text-sm w-5 text-center" />
                 <span>Blog &amp; Resources</span>
+              </Link>
+
+              {/* Dork Intelligence Tool */}
+              <Link 
+                href="/tools/dork-intelligence" 
+                onClick={() => setMobileMenuOpen(false)}
+                className={`flex items-center justify-between px-3.5 py-3 rounded-xl text-sm font-medium transition-colors ${
+                  pathname === '/tools/dork-intelligence' ? 'bg-blue-600/20 text-white font-semibold border border-blue-500/30' : 'text-slate-200 hover:bg-slate-800/50'
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <i className="fas fa-terminal text-cyan-400 text-sm w-5 text-center" />
+                  <span>Dork Intelligence</span>
+                </div>
+                <span className="text-[9px] bg-cyan-500/20 text-cyan-300 px-1.5 py-0.5 rounded font-mono border border-cyan-500/30">OSINT</span>
               </Link>
 
               {/* About Us (Accordion) */}
