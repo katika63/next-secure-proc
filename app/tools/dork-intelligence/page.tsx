@@ -10,6 +10,7 @@ import type { DorkEntry } from '@/app/types/dork'
 interface DorkApiResponse {
   dorks: DorkEntry[]
   totalMatches: number
+  totalMatchingAllCategories?: number
   totalCollection: number
   page: number
   limit: number
@@ -34,11 +35,13 @@ export default function DorkIntelligencePage() {
   const [selectedCategory, setSelectedCategory] = useState('All')
   const [selectedRisk, setSelectedRisk] = useState('All')
   const [page, setPage] = useState(1)
+  const [limit, setLimit] = useState(24)
 
   const [dorks, setDorks] = useState<DorkEntry[]>([])
   const [generatedDorks, setGeneratedDorks] = useState<DorkEntry[]>([])
   const [categories, setCategories] = useState<CategoryOption[]>([])
   const [totalMatches, setTotalMatches] = useState(0)
+  const [totalAllCategories, setTotalAllCategories] = useState<number | undefined>(undefined)
   const [totalCollection, setTotalCollection] = useState(0)
   const [totalPages, setTotalPages] = useState(1)
   const [appliedDomain, setAppliedDomain] = useState<string | null>(null)
@@ -46,7 +49,7 @@ export default function DorkIntelligencePage() {
   const [error, setError] = useState<string | null>(null)
 
   const fetchSearchDorks = useCallback(
-    async (queryToRun: string, category: string, risk: string, targetPage: number) => {
+    async (queryToRun: string, category: string, risk: string, targetPage: number, pageSize: number) => {
       setLoading(true)
       setError(null)
 
@@ -56,7 +59,7 @@ export default function DorkIntelligencePage() {
           category,
           risk,
           page: String(targetPage),
-          limit: '24',
+          limit: String(pageSize),
         })
 
         const res = await fetch(`/api/dorks?${params.toString()}`)
@@ -70,6 +73,7 @@ export default function DorkIntelligencePage() {
         setGeneratedDorks([])
         setCategories(data.categories || [])
         setTotalMatches(data.totalMatches || 0)
+        setTotalAllCategories(data.totalMatchingAllCategories)
         setTotalCollection(data.totalCollection || 0)
         setTotalPages(data.totalPages || 1)
         setAppliedDomain(data.appliedDomain || null)
@@ -122,11 +126,11 @@ export default function DorkIntelligencePage() {
 
   useEffect(() => {
     if (mode === 'search') {
-      fetchSearchDorks(activeQuery, selectedCategory, selectedRisk, page)
+      fetchSearchDorks(activeQuery, selectedCategory, selectedRisk, page, limit)
     } else {
       fetchGeneratedDorks(activeQuery)
     }
-  }, [mode, activeQuery, selectedCategory, selectedRisk, page, fetchSearchDorks, fetchGeneratedDorks])
+  }, [mode, activeQuery, selectedCategory, selectedRisk, page, limit, fetchSearchDorks, fetchGeneratedDorks])
 
   const filteredGeneratedDorks = useMemo(() => {
     if (mode !== 'generate') return []
@@ -172,6 +176,11 @@ export default function DorkIntelligencePage() {
 
   const handleRiskSelect = (risk: string) => {
     setSelectedRisk(risk)
+    setPage(1)
+  }
+
+  const handleLimitChange = (nextLimit: number) => {
+    setLimit(nextLimit)
     setPage(1)
   }
 
@@ -252,6 +261,9 @@ export default function DorkIntelligencePage() {
             selectedRisk={selectedRisk}
             onSelectRisk={handleRiskSelect}
             totalCollection={totalCollection}
+            totalAllCategories={mode === 'search' ? totalAllCategories : undefined}
+            hasActiveSearch={Boolean(activeQuery)}
+            onClearAllFilters={handleResetFilters}
           />
         </motion.div>
 
@@ -263,15 +275,20 @@ export default function DorkIntelligencePage() {
           error={error}
           totalMatches={mode === 'generate' ? filteredMatchedDorks.length : totalMatches}
           page={page}
+          limit={limit}
           totalPages={totalPages}
+          selectedCategory={selectedCategory}
+          selectedRisk={selectedRisk}
+          activeQuery={activeQuery}
           onPageChange={(nextPage) => {
             setPage(nextPage)
             window.scrollTo({ top: 0, behavior: 'smooth' })
           }}
+          onLimitChange={handleLimitChange}
           onResetFilters={handleResetFilters}
           onRetry={() =>
             mode === 'search'
-              ? fetchSearchDorks(activeQuery, selectedCategory, selectedRisk, page)
+              ? fetchSearchDorks(activeQuery, selectedCategory, selectedRisk, page, limit)
               : fetchGeneratedDorks(activeQuery)
           }
           isGenerateMode={mode === 'generate'}

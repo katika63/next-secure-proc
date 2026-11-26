@@ -11,12 +11,19 @@ interface DorkResultsProps {
   error: string | null
   totalMatches: number
   page: number
+  limit: number
   totalPages: number
+  selectedCategory: string
+  selectedRisk: string
+  activeQuery: string
   onPageChange: (nextPage: number) => void
+  onLimitChange: (nextLimit: number) => void
   onResetFilters: () => void
   onRetry: () => void
   isGenerateMode?: boolean
 }
+
+const PAGE_SIZE_OPTIONS = [12, 24, 48]
 
 export default function DorkResults({
   dorks,
@@ -25,8 +32,13 @@ export default function DorkResults({
   error,
   totalMatches,
   page,
+  limit,
   totalPages,
+  selectedCategory,
+  selectedRisk,
+  activeQuery,
   onPageChange,
+  onLimitChange,
   onResetFilters,
   onRetry,
   isGenerateMode = false,
@@ -51,7 +63,6 @@ export default function DorkResults({
   if (loading) {
     return (
       <div className="space-y-6">
-        {/* Skeleton loader for generated section placeholder */}
         {isGenerateMode && (
           <div className="bg-cyan-950/20 border border-cyan-500/20 rounded-2xl p-5 animate-pulse space-y-3">
             <div className="h-4 w-48 bg-cyan-900/40 rounded" />
@@ -107,50 +118,123 @@ export default function DorkResults({
 
   const hasGenerated = generatedDorks.length > 0
   const hasDorks = dorks.length > 0
+  const startRange = totalMatches === 0 ? 0 : (page - 1) * limit + 1
+  const endRange = Math.min(page * limit, totalMatches)
 
   if (!hasGenerated && !hasDorks) {
     return (
-      <div className="bg-[#050c1e]/80 border border-[#16274a] rounded-2xl p-10 text-center space-y-3">
+      <div className="bg-[#050c1e]/80 border border-[#16274a] rounded-2xl p-10 text-center space-y-4">
         <div className="w-12 h-12 rounded-full bg-blue-500/10 border border-blue-500/30 flex items-center justify-center mx-auto text-blue-400">
           <i className="fas fa-search-minus text-lg" />
         </div>
-        <h3 className="text-base font-bold text-white">No Matching Dorks Found</h3>
-        <p className="text-xs text-slate-400 max-w-md mx-auto">
-          {isGenerateMode
-            ? 'Enter a keyword like "api key", "s3 bucket", or "password" and click Generate Dorks.'
-            : 'Try broadening your search terms, removing restrictive keywords, or switching back to all categories.'}
-        </p>
+        <div className="space-y-1.5">
+          <h3 className="text-base font-bold text-white">No Matching Dorks Found</h3>
+          <p className="text-xs text-slate-400 max-w-md mx-auto leading-relaxed">
+            {isGenerateMode
+              ? 'Enter a keyword like "api key", "s3 bucket", or "password" and click Generate Dorks, or clear active category/risk filters.'
+              : 'No dorks matched your current search terms and active filters. Try broadening your query or resetting filters.'}
+          </p>
+        </div>
+        <div className="flex flex-wrap items-center justify-center gap-2 text-[11px] font-mono">
+          {selectedCategory !== 'All' && (
+            <span className="px-2.5 py-1 rounded-md bg-blue-950/60 border border-blue-500/30 text-cyan-300">
+              Category: {selectedCategory}
+            </span>
+          )}
+          {selectedRisk !== 'All' && (
+            <span className="px-2.5 py-1 rounded-md bg-blue-950/60 border border-blue-500/30 text-cyan-300">
+              Risk: {selectedRisk}
+            </span>
+          )}
+          {activeQuery && (
+            <span className="px-2.5 py-1 rounded-md bg-blue-950/60 border border-blue-500/30 text-cyan-300">
+              Query: &quot;{activeQuery}&quot;
+            </span>
+          )}
+        </div>
         <button
           type="button"
           onClick={onResetFilters}
           className="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-mono font-semibold transition-colors"
         >
-          Reset All Filters
+          Clear Filters &amp; Reset Search
         </button>
       </div>
     )
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
+      {/* ── Results Summary Bar ──────────────────────────────────────────── */}
+      <div className="bg-[#050c1e]/80 border border-[#16274a] rounded-xl px-4 py-3 flex flex-col lg:flex-row lg:items-center justify-between gap-3 text-xs font-mono">
+        <div className="flex flex-wrap items-center gap-2 text-slate-300">
+          {isGenerateMode ? (
+            <span>
+              Showing{' '}
+              <strong className="text-cyan-300">{generatedDorks.length}</strong> generated &amp;{' '}
+              <strong className="text-white">{dorks.length}</strong> matching collection dorks
+            </span>
+          ) : (
+            <span>
+              Showing{' '}
+              <strong className="text-white">
+                {startRange.toLocaleString()}–{endRange.toLocaleString()}
+              </strong>{' '}
+              of <strong className="text-cyan-400">{totalMatches.toLocaleString()}</strong> matching dorks
+            </span>
+          )}
+
+          <span className="text-slate-600 hidden sm:inline">•</span>
+
+          <span className="px-2 py-0.5 rounded bg-[#08132b] border border-[#162a52] text-[11px] text-slate-300">
+            Category: <strong className="text-cyan-300">{selectedCategory}</strong>
+          </span>
+          <span className="px-2 py-0.5 rounded bg-[#08132b] border border-[#162a52] text-[11px] text-slate-300">
+            Risk: <strong className="text-cyan-300">{selectedRisk}</strong>
+          </span>
+        </div>
+
+        {!isGenerateMode && (
+          <div className="flex flex-wrap items-center gap-3 text-slate-400">
+            <div className="flex items-center gap-1.5">
+              <span className="text-[11px]">Per page:</span>
+              {PAGE_SIZE_OPTIONS.map((size) => (
+                <button
+                  key={size}
+                  type="button"
+                  onClick={() => onLimitChange(size)}
+                  className={`px-2 py-0.5 rounded border text-[11px] transition-colors ${
+                    limit === size
+                      ? 'bg-blue-600/30 border-blue-500/60 text-cyan-300 font-semibold'
+                      : 'bg-[#030816] border-[#142344] text-slate-400 hover:text-white'
+                  }`}
+                >
+                  {size}
+                </button>
+              ))}
+            </div>
+            <span className="text-slate-600">•</span>
+            <span>
+              Page <strong className="text-white">{page}</strong> of{' '}
+              <strong className="text-white">{totalPages.toLocaleString()}</strong>
+            </span>
+          </div>
+        )}
+      </div>
+
       {/* ── Generated Dorks Section ──────────────────────────────────────── */}
       {hasGenerated && (
         <div className="space-y-4">
-          {/* Section header */}
           <div className="flex items-center gap-3">
             <div className="flex-1 h-px bg-gradient-to-r from-cyan-500/50 to-transparent" />
             <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/40 border border-cyan-500/40 text-cyan-300 text-xs font-mono font-semibold">
               <i className="fas fa-bolt text-[10px]" />
-              <span>{generatedDorks.length} Generated Dork Queries</span>
+              <span>{generatedDorks.length} Dynamically Generated Dork Queries</span>
             </div>
             <div className="flex-1 h-px bg-gradient-to-l from-cyan-500/50 to-transparent" />
           </div>
 
-          <p className="text-[11px] text-slate-400 font-mono text-center">
-            Synthesised from dork templates using your keyword. Each query is ready to copy or test on Google.
-          </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 items-stretch">
             {generatedDorks.map((dork) => (
               <DorkResultCard key={dork.id} dork={dork} isGenerated={true} />
             ))}
@@ -158,7 +242,7 @@ export default function DorkResults({
         </div>
       )}
 
-      {/* ── Matched Dorks Section ────────────────────────────────────────── */}
+      {/* ── Matched Collection Dorks Section ─────────────────────────────── */}
       {hasDorks && (
         <div className="space-y-4">
           {hasGenerated && (
@@ -166,61 +250,51 @@ export default function DorkResults({
               <div className="flex-1 h-px bg-gradient-to-r from-blue-500/40 to-transparent" />
               <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-blue-950/40 border border-blue-500/40 text-blue-300 text-xs font-mono font-semibold">
                 <i className="fas fa-database text-[10px]" />
-                <span>
-                  {isGenerateMode
-                    ? `Top ${dorks.length} Matching Dorks from Collection`
-                    : `${totalMatches.toLocaleString()} Matching Queries`}
-                </span>
+                <span>Top {dorks.length} Matching Collection Dorks</span>
               </div>
               <div className="flex-1 h-px bg-gradient-to-l from-blue-500/40 to-transparent" />
             </div>
           )}
 
-          {!hasGenerated && (
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs font-mono text-slate-400">
-              <span>
-                Showing <strong className="text-white">{dorks.length}</strong> of{' '}
-                <strong className="text-cyan-400">{totalMatches.toLocaleString()}</strong> matching queries
-              </span>
-              <span>
-                Page <strong className="text-white">{page}</strong> of{' '}
-                <strong className="text-white">{totalPages.toLocaleString()}</strong>
-              </span>
-            </div>
-          )}
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 items-stretch">
             {dorks.map((dork) => (
-              <DorkResultCard key={dork.id} dork={dork} />
+              <DorkResultCard key={dork.id} dork={dork} isGenerated={false} />
             ))}
           </div>
 
-          {/* Pagination — only shown in search mode */}
+          {/* Pagination — Search mode */}
           {!isGenerateMode && totalPages > 1 && (
-            <div className="flex items-center justify-center gap-2 pt-4">
-              <button
-                type="button"
-                disabled={page <= 1}
-                onClick={() => onPageChange(page - 1)}
-                className="px-4 py-2 rounded-lg bg-[#050c1e] hover:bg-[#0c1a3a] disabled:opacity-40 disabled:cursor-not-allowed border border-[#1a2b4c] text-xs font-mono text-slate-200 transition-colors"
-              >
-                <i className="fas fa-chevron-left mr-1.5 text-[10px]" />
-                Previous
-              </button>
-
-              <span className="px-3 py-2 text-xs font-mono text-slate-400">
-                {page} / {totalPages.toLocaleString()}
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4 border-t border-[#122240]">
+              <span className="text-xs font-mono text-slate-400">
+                Displaying {startRange.toLocaleString()}–{endRange.toLocaleString()} of{' '}
+                {totalMatches.toLocaleString()} results
               </span>
 
-              <button
-                type="button"
-                disabled={page >= totalPages}
-                onClick={() => onPageChange(page + 1)}
-                className="px-4 py-2 rounded-lg bg-[#050c1e] hover:bg-[#0c1a3a] disabled:opacity-40 disabled:cursor-not-allowed border border-[#1a2b4c] text-xs font-mono text-slate-200 transition-colors"
-              >
-                Next
-                <i className="fas fa-chevron-right ml-1.5 text-[10px]" />
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  disabled={page <= 1}
+                  onClick={() => onPageChange(page - 1)}
+                  className="px-4 py-2 rounded-lg bg-[#050c1e] hover:bg-[#0c1a3a] disabled:opacity-40 disabled:cursor-not-allowed border border-[#1a2b4c] text-xs font-mono text-slate-200 transition-colors"
+                >
+                  <i className="fas fa-chevron-left mr-1.5 text-[10px]" />
+                  Previous
+                </button>
+
+                <span className="px-3 py-2 text-xs font-mono text-slate-300">
+                  Page <strong className="text-white">{page}</strong> / {totalPages.toLocaleString()}
+                </span>
+
+                <button
+                  type="button"
+                  disabled={page >= totalPages}
+                  onClick={() => onPageChange(page + 1)}
+                  className="px-4 py-2 rounded-lg bg-[#050c1e] hover:bg-[#0c1a3a] disabled:opacity-40 disabled:cursor-not-allowed border border-[#1a2b4c] text-xs font-mono text-slate-200 transition-colors"
+                >
+                  Next
+                  <i className="fas fa-chevron-right ml-1.5 text-[10px]" />
+                </button>
+              </div>
             </div>
           )}
         </div>

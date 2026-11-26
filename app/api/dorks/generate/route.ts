@@ -1,6 +1,11 @@
 import { NextResponse } from 'next/server'
 import dorkDataset from '@/app/data/dorks.json'
 import type { DorkCollectionDataset, DorkEntry } from '@/app/types/dork'
+import {
+  extractDomainAndKeywords,
+  customizeAndNormalizeQuery,
+  normalizeDorkOperators,
+} from '@/app/lib/dorkQuery'
 
 const dataset = dorkDataset as DorkCollectionDataset
 
@@ -215,34 +220,11 @@ const DORK_TEMPLATES: DorkTemplate[] = [
 // ─── Helpers ───────────────────────────────────────────────────────────────
 
 function buildQuery(template: DorkTemplate, keyword: string, domain: string | null): string {
-  const q = template.pattern.replace(/\{KW\}/g, keyword)
+  const q = normalizeDorkOperators(template.pattern.replace(/\{KW\}/g, keyword))
   if (!domain) return q
   // If the template itself contains no site: operator, prepend it
   if (!/\bsite:/i.test(q)) return `site:${domain} ${q}`
   return q
-}
-
-const DOMAIN_REGEX =
-  /^(?:https?:\/\/)?([a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)+)(?:\/.*)?$/i
-
-function extractDomainAndKeyword(raw: string): { domain: string | null; keyword: string } {
-  const trimmed = raw.trim()
-  if (!trimmed) return { domain: null, keyword: '' }
-
-  const tokens = trimmed.split(/\s+/)
-  let domain: string | null = null
-  const kws: string[] = []
-
-  for (const tok of tokens) {
-    const m = tok.match(DOMAIN_REGEX)
-    if (!domain && m) {
-      domain = m[1].toLowerCase()
-    } else {
-      kws.push(tok)
-    }
-  }
-
-  return { domain, keyword: kws.join(' ').toLowerCase().trim() }
 }
 
 /** Score a dork's relevance to the keyword; higher = more relevant. */
@@ -267,10 +249,10 @@ export async function GET(request: Request) {
       return NextResponse.json({ generated: [], matched: [], keyword: '', domain: null }, { status: 200 })
     }
 
-    const { domain, keyword } = extractDomainAndKeyword(rawQ)
+    const { domain, keywords: keyword } = extractDomainAndKeywords(rawQ)
 
     if (!keyword) {
-      // No keyword — just return domain-scoped generic dorks from the main dataset
+      // No keyword — return empty generated set and domain metadata
       return NextResponse.json({ generated: [], matched: [], keyword: '', domain }, { status: 200 })
     }
 
@@ -302,16 +284,10 @@ export async function GET(request: Request) {
     scored.sort((a, b) => b.score - a.score)
 
     const TOP_N = 30
-    const matched: DorkEntry[] = scored.slice(0, TOP_N).map(({ dork }) => {
-      const q = domain
-        ? dork.query.includes('<target>')
-          ? dork.query.replace(/<target>/g, domain)
-          : /\bsite:/i.test(dork.query)
-          ? dork.query
-          : `site:${domain} ${dork.query}`
-        : dork.query
-      return { ...dork, query: q }
-    })
+    const matched: DorkEntry[] = scored.slice(0, TOP_N).map(({ dork }) => ({
+      ...dork,
+      query: customizeAndNormalizeQuery(dork.query, domain),
+    }))
 
     return NextResponse.json({
       generated,
